@@ -34,8 +34,12 @@ export default function App() {
                 />
             )}
 
-            <Sidebar {...giftMinder} />
-            <MainContent {...giftMinder} calcolaOccorrenza={calcolaOccorrenza} />
+            <div className="flex-grow contents order-2 md:order-1">
+                <Sidebar {...giftMinder} />
+            </div>
+            <div className="flex-grow contents order-1 md:order-2">
+                <MainContent {...giftMinder} calcolaOccorrenza={calcolaOccorrenza} />
+            </div>
 
             {giftMinder.showSettings && (
                 <SettingsModal

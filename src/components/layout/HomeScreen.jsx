@@ -43,7 +43,7 @@ const HomeScreen = ({
 
                 <div className="grid grid-cols-1 lg:grid-cols-[250px_1fr] gap-6 mb-6">
                     {/* Left Column: Action Buttons */}
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-row lg:flex-col gap-4">
                         <button onClick={openNewPersonModal} className="bg-white text-center p-4 rounded-xl shadow-sm border border-gray-200 hover:bg-gray-50 transition w-full flex-grow">
                             <Users className="mx-auto mb-2 text-indigo-500" size={24} />
                             <span className="font-bold text-sm text-gray-700">Nuova Persona</span>
