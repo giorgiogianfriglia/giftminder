@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+/* Stili Globali */
+body {
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar personalizzata */
+.custom-scroll::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.custom-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scroll::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 20px;
+}
+
+/* Animazioni */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+.fade-in {
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* Dark mode override per scrollbar */
+.dark .custom-scroll::-webkit-scrollbar-thumb {
+  background-color: #4b5563;
+}

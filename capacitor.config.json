@@ -1,0 +1,6 @@
+{
+  "appId": "com.giftminder.app",
+  "appName": "GiftMinder",
+  "webDir": "dist",
+  "bundledWebRuntime": false
+}
