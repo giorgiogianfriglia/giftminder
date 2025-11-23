@@ -1,10 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Plus, Settings, Archive, Home, Users, Menu, LogOut } from 'lucide-react';
+import { Plus, Settings, Archive, Home, Users, Menu, LogOut, Gift } from 'lucide-react';
 import PeopleList from './PeopleList';
 
+import logo from '/logo.png';
 const Sidebar = ({
     themeStyles,
     openNewPersonModal,
+    openNewGiftModal,
     sidebarList,
     handleSidebarClick,
     handleHomeClick,
@@ -40,7 +42,7 @@ const Sidebar = ({
         <aside className="w-full md:w-80 bg-slate-50 border-r border-gray-200 flex flex-col h-auto md:h-full shadow-xl z-20">
             <div className="p-4 border-b border-gray-200 flex justify-between items-center sticky top-0 bg-slate-50">
                 <div className="flex items-center gap-2 font-bold text-lg" style={themeStyles.textPrimary}>
-                    <img src="/logo.png" className="w-6 h-6 object-contain" alt="logo" /> GiftMinder
+                    <img src={logo} className="w-6 h-6 object-contain" alt="logo" /> GiftMinder
                 </div>
                 <div className='flex items-center gap-2'>
                     <button onClick={handleHomeClick} className="p-1.5 rounded shadow hover:opacity-90 transition" style={themeStyles.primary}>
@@ -52,9 +54,6 @@ const Sidebar = ({
                         </button>
                         {menuOpen && (
                             <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-30 border">
-                                <a href="#" onClick={(e) => { e.preventDefault(); handleMenuClick(openNewPersonModal) }} className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                    <Plus size={16} /> Aggiungi Persona
-                                </a>
                                 <a href="#" onClick={(e) => { e.preventDefault(); handleMenuClick(() => setShowPeopleList(!showPeopleList)) }} className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 md:hidden">
                                     <Users size={16} /> Persone
                                 </a>
@@ -73,10 +72,18 @@ const Sidebar = ({
                     </div>
                 </div>
             </div>
+            <div className="p-4 flex flex-col gap-2">
+                <button onClick={openNewPersonModal} style={themeStyles.primary} className="text-white px-4 py-2 rounded-lg font-bold shadow-md flex items-center justify-center gap-2 hover:opacity-90 transition w-full">
+                    <Plus size={18} /> Nuova Persona
+                </button>
+                <button onClick={openNewGiftModal} style={themeStyles.secondary} className="text-white px-4 py-2 rounded-lg font-bold shadow-md flex items-center justify-center gap-2 hover:opacity-90 transition w-full">
+                    <Gift size={18} /> Nuovo Regalo
+                </button>
+            </div>
             <div className={`${showPeopleList ? 'fixed inset-0 bg-white z-20 h-screen' : 'hidden'} md:block md:static md:h-auto`}>
                 <div className="p-4 border-b border-gray-200 flex justify-between items-center sticky top-0 bg-slate-50 md:hidden">
                     <div className="flex items-center gap-2 font-bold text-lg" style={themeStyles.textPrimary}>
-                        <img src="/logo.png" className="w-6 h-6 object-contain" alt="logo" /> GiftMinder
+                        <img src={logo} className="w-6 h-6 object-contain" alt="logo" /> GiftMinder
                     </div>
                     <button onClick={() => setShowPeopleList(false)} className="p-1.5 rounded shadow hover:opacity-90 transition mr-2" style={themeStyles.primary}>
                         <Home size={20} />
