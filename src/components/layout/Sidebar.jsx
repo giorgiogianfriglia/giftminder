@@ -72,14 +72,7 @@ const Sidebar = ({
                     </div>
                 </div>
             </div>
-            <div className="p-4 flex flex-col gap-2">
-                <button onClick={openNewPersonModal} style={themeStyles.primary} className="text-white px-4 py-2 rounded-lg font-bold shadow-md flex items-center justify-center gap-2 hover:opacity-90 transition w-full">
-                    <Plus size={18} /> Nuova Persona
-                </button>
-                <button onClick={openNewGiftModal} style={themeStyles.secondary} className="text-white px-4 py-2 rounded-lg font-bold shadow-md flex items-center justify-center gap-2 hover:opacity-90 transition w-full">
-                    <Gift size={18} /> Nuovo Regalo
-                </button>
-            </div>
+
             <div className={`${showPeopleList ? 'fixed inset-0 bg-white z-20 h-screen' : 'hidden'} md:block md:static md:h-auto`}>
                 <div className="p-4 border-b border-gray-200 flex justify-between items-center sticky top-0 bg-slate-50 md:hidden">
                     <div className="flex items-center gap-2 font-bold text-lg" style={themeStyles.textPrimary}>

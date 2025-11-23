@@ -14,6 +14,7 @@ const HomeScreen = ({
     handleRefreshAmazonSuggestions,
     selectedUid,
     currentTheme,
+    setShowPeopleList
 }) => {
     if (sidebarList.length === 0) {
         return (
@@ -54,6 +55,10 @@ const HomeScreen = ({
                         <button onClick={openNewGiftModal} className="bg-white text-center p-4 rounded-xl shadow-sm border border-gray-200 hover:bg-gray-50 transition">
                             <Gift className="mx-auto mb-2 text-amber-500" size={24} />
                             <span className="font-bold text-sm text-gray-700">Nuovo Regalo</span>
+                        </button>
+                        <button onClick={() => setShowPeopleList(true)} className="bg-white text-center p-4 rounded-xl shadow-sm border border-gray-200 hover:bg-gray-50 transition lg:hidden">
+                            <Users className="mx-auto mb-2 text-green-500" size={24} />
+                            <span className="font-bold text-sm text-gray-700">Persone</span>
                         </button>
                     </div>
 

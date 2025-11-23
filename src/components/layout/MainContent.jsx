@@ -8,6 +8,8 @@ const MainContent = (props) => {
     const {
         activePerson,
         openEditPersonModal,
+        openNewPersonModal,
+        openNewGiftModal,
         themeStyles,
         headerInfo,
         handleSelectUid,
@@ -87,14 +89,28 @@ const MainContent = (props) => {
                     </div>
                 </div>
 
-                <div className="flex items-center justify-end mb-6">
-                    <div className="flex items-center gap-2">
-                        <button onClick={() => setShowModalStats(true)} className="bg-white border border-gray-300 px-4 py-2 rounded-lg font-bold shadow-sm flex items-center gap-2">
-                            <Calculator size={18} />
-                        </button>
-                        <button onClick={handleArchive} className="bg-white border border-gray-200 text-gray-400 hover:text-red-600 px-3 py-2 rounded-lg shadow-sm hover:bg-red-50 transition">
-                            <Trash size={18} />
-                        </button>
+                <div className="flex flex-row gap-4 mb-6">
+                    <div className="flex-grow sm:w-4/5 sm:flex-grow-0">
+                        <div className="grid grid-cols-2 gap-4 h-full">
+                            <button onClick={openNewPersonModal} className="bg-white text-center p-4 rounded-xl shadow-sm border border-gray-200 hover:bg-gray-50 transition w-full h-full">
+                                <Users className="mx-auto mb-2 text-indigo-500" size={24} />
+                                <span className="font-bold text-sm text-gray-700">Nuova Persona</span>
+                            </button>
+                            <button onClick={openNewGiftModal} className="bg-white text-center p-4 rounded-xl shadow-sm border border-gray-200 hover:bg-gray-50 transition w-full h-full">
+                                <Gift className="mx-auto mb-2 text-amber-500" size={24} />
+                                <span className="font-bold text-sm text-gray-700">Nuovo Regalo</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div className="flex-shrink-0 sm:w-1/5">
+                        <div className="flex flex-col gap-2 h-full">
+                            <button onClick={() => setShowModalStats(true)} className="bg-white border border-gray-300 px-4 py-2 rounded-lg font-bold shadow-sm flex items-center gap-2 justify-center">
+                                <Calculator size={18} />
+                            </button>
+                            <button onClick={handleArchive} className="bg-white border border-gray-200 text-gray-400 hover:text-red-600 px-3 py-2 rounded-lg shadow-sm hover:bg-red-50 transition flex justify-center">
+                                <Trash size={18} />
+                            </button>
+                        </div>
                     </div>
                 </div>
 
