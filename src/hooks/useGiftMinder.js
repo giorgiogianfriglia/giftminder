@@ -40,6 +40,8 @@ export const useGiftMinder = () => {
     const [suggerimenti, setSuggerimenti] = useState([]);
     const [refreshAmazonTrigger, setRefreshAmazonTrigger] = useState(0);
 
+    const [showPeopleList, setShowPeopleList] = useState(false);
+
     // Edit States
     const [editingGiftIndex, setEditingGiftIndex] = useState(null);
     const [editingGiftEventIndex, setEditingGiftEventIndex] = useState(null);
@@ -171,7 +173,7 @@ export const useGiftMinder = () => {
         setSuggerimenti(candidates.sort(() => 0.5 - Math.random()).slice(0, 3));
     };
 
-    const handleSidebarClick = (item) => { setSelectedUid(item.uidToSelect); setActiveTab("Tutti"); setSearchTerm(""); updateSuggestions("Tutti"); };
+    const handleSidebarClick = (item) => { setSelectedUid(item.uidToSelect); setActiveTab("Tutti"); setSearchTerm(""); updateSuggestions("Tutti"); setShowPeopleList(false); };
     const handleHomeClick = () => { setSelectedUid(null); };
     const handleSelectUid = (uid, type) => { setSelectedUid(uid); setActiveTab("Tutti"); setSearchTerm(""); updateSuggestions("Tutti"); };
     const handleTabChange = (tabName) => { setActiveTab(tabName); updateSuggestions(tabName); };
@@ -332,6 +334,7 @@ export const useGiftMinder = () => {
         email, setEmail, password, setPassword, authLoading, selectedUid, setSelectedUid, activeTab, setActiveTab, searchTerm, setSearchTerm,
         showModalPerson, setShowModalPerson, showModalGift, setShowModalGift, showModalStats, setShowModalStats, showArchive, setShowArchive,
         showAddEventModal, setShowAddEventModal, confirmConfig, setConfirmConfig, toastMsg, setToastMsg, suggerimenti, setSuggerimenti,
+        showPeopleList, setShowPeopleList,
         editingGiftIndex, editingGiftEventIndex, editingPersonId, editingEvents, newPersonName, setNewPersonName, newPersonPhoto, setNewPersonPhoto, newRelation, setNewRelation,
         customRelation, setCustomRelation, newPartnerId, setNewPartnerId, newEventType, setNewEventType, customEventType, setCustomEventType,
         newEventDate, setNewEventDate, giftTargetEvent, setGiftTargetEvent, giftObj, setGiftObj, giftYear, setGiftYear, giftParticipants, setGiftParticipants,

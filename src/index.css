@@ -1,9 +1,10 @@
 @import "tailwindcss";
 
 /* Stili Globali */
-body {
+html {
   font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
+  font-size: 14px;
 }
 
 /* Scrollbar personalizzata */
