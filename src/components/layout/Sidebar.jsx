@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Plus, Settings, Archive, Home, Users, Menu } from 'lucide-react';
+import { Plus, Settings, Archive, Home, Users, Menu, LogOut } from 'lucide-react';
 import PeopleList from './PeopleList';
 
 const Sidebar = ({
@@ -13,7 +13,8 @@ const Sidebar = ({
     setShowSettings,
     setShowArchive,
     showPeopleList,
-    setShowPeopleList
+    setShowPeopleList,
+    handleLogout
 }) => {
     const [menuOpen, setMenuOpen] = useState(false);
     const menuRef = useRef(null);
@@ -63,6 +64,10 @@ const Sidebar = ({
                                 <a href="#" onClick={(e) => { e.preventDefault(); handleMenuClick(() => setShowSettings(true)) }} className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                     <Settings size={16} /> Opzioni
                                 </a>
+                                <div className="border-t my-1"></div>
+                                <a href="#" onClick={(e) => { e.preventDefault(); handleMenuClick(handleLogout) }} className="flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50">
+                                    <LogOut size={16} /> Esci
+                                </a>
                             </div>
                         )}
                     </div>
@@ -79,6 +84,7 @@ const Sidebar = ({
                 </div>
                 <div className="hidden md:flex justify-between px-4 py-2 text-[10px] font-bold text-gray-400 uppercase tracking-wider border-b border-gray-200 bg-gray-100">
                     <span>Persona</span>
+                    <span>Prossima scadenza</span>
                 </div>
                 <PeopleList 
                     sidebarList={sidebarList}

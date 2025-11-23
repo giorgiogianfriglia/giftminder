@@ -66,7 +66,7 @@ const MainContent = (props) => {
                         )}
                         <div>
                             <div className="flex items-center gap-3">
-                                <h2 className="text-4xl font-bold">{truncateText(activePerson.nome, 30)}</h2>
+                                <h2 className="text-3xl font-bold">{truncateText(activePerson.nome, 30)}</h2>
                                 <button onClick={openEditPersonModal} className="text-gray-400 hover:text-indigo-600 transition" title="Modifica">
                                     <Pencil size={20} />
                                 </button>
@@ -86,18 +86,20 @@ const MainContent = (props) => {
                             </div>
                         </div>
                     </div>
-                    <button onClick={handleArchive} className="bg-white border border-gray-200 text-gray-400 hover:text-red-600 px-3 py-2 rounded-lg text-xs font-bold flex items-center gap-2 shadow-sm hover:bg-red-50 transition">
-                        <Trash size={16} /> Archivia
-                    </button>
                 </div>
 
                 <div className="flex items-center justify-between mb-6">
                     <button onClick={openNewGiftModal} style={themeStyles.primary} className="text-white px-4 py-2 rounded-lg font-bold shadow-md flex items-center gap-2 hover:opacity-90 transition">
                         <Plus size={18} /> Nuovo Regalo
                     </button>
-                    <button onClick={() => setShowModalStats(true)} className="bg-white border border-gray-300 px-4 py-2 rounded-lg font-bold shadow-sm flex items-center gap-2 ml-auto">
-                        <Calculator size={18} />
-                    </button>
+                    <div className="flex items-center gap-2 ml-auto">
+                        <button onClick={() => setShowModalStats(true)} className="bg-white border border-gray-300 px-4 py-2 rounded-lg font-bold shadow-sm flex items-center gap-2">
+                            <Calculator size={18} />
+                        </button>
+                        <button onClick={handleArchive} className="bg-white border border-gray-200 text-gray-400 hover:text-red-600 px-3 py-2 rounded-lg shadow-sm hover:bg-red-50 transition">
+                            <Trash size={18} />
+                        </button>
+                    </div>
                 </div>
 
                 <div className="bg-orange-500 text-white text-center p-2 mb-4 rounded-lg shadow-md font-bold">
