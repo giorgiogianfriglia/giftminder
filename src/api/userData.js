@@ -6,7 +6,11 @@ export const fetchUserData = async (userId) => {
         .select('id, persone, custom_relazioni, custom_event_types')
         .maybeSingle();
 
-    if (error && error.code !== 'PGRST116') { // PGRST116 = 'single row not found'
+    if (error && error.code === 'PGRST116') { // PGRST116 = 'single row not found'
+        return 'USER_NOT_FOUND';
+    }
+
+    if (error) {
         console.error('Errore nel fetch dei dati utente:', error);
         throw error;
     }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Gift, Calendar, Plus, Users, Star, RefreshCw } from 'lucide-react';
+import { Gift, Calendar, Plus, Users, Star, RefreshCw, Camera } from 'lucide-react';
 import PeopleList from './PeopleList';
 
 const HomeScreen = ({
@@ -148,19 +148,25 @@ const HomeScreen = ({
                                 <a href="https://www.amazon.it/most-wished-for?tag=giftminder-21" target="_blank" rel="noreferrer" className="text-sm font-bold text-white hover:underline">Vedi tutti</a>
                             </div>
                         </div>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {amazonSuggestions.map((item, i) => (
-                                <a key={i} href={item.link} target="_blank" rel="noreferrer" className="group block">
-                                    <div className="bg-white rounded-lg mb-2 h-32 flex items-center justify-center p-2">
-                                         <p className="text-center font-bold text-gray-700">{item.nome}</p>
+                                <a key={i} href={item.link} target="_blank" rel="noreferrer" className="group bg-white/20 p-2 rounded-lg flex items-center gap-4">
+                                    <div className="w-20 h-20 rounded-md flex-shrink-0 bg-white flex items-center justify-center p-1 overflow-hidden">
+                                        {item.img ? (
+                                            <img src={item.img} alt={item.nome} className="w-full h-full object-cover" />
+                                        ) : (
+                                            <Camera size={32} className="text-gray-400" />
+                                        )}
                                     </div>
-                                    <p className="text-sm font-bold text-white group-hover:text-gray-200 transition truncate">{item.nome}</p>
-                                    <div className="flex items-center text-xs text-white">
-                                        <Star size={12} fill="currentColor" />
-                                        <Star size={12} fill="currentColor" />
-                                        <Star size={12} fill="currentColor" />
-                                        <Star size={12} fill="currentColor" />
-                                        <Star size={12} className="text-gray-300" fill="currentColor" />
+                                    <div className="flex-1">
+                                        <p className="text-sm font-bold text-white group-hover:text-gray-200 transition">{item.nome}</p>
+                                        <div className="flex items-center text-xs text-white mt-1">
+                                            <Star size={12} fill="currentColor" />
+                                            <Star size={12} fill="currentColor" />
+                                            <Star size={12} fill="currentColor" />
+                                            <Star size={12} fill="currentColor" />
+                                            <Star size={12} className="text-gray-300" fill="currentColor" />
+                                        </div>
                                     </div>
                                 </a>
                             ))}

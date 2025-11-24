@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Gift, Calendar, Plus, Trash, Pencil, Lightbulb, RefreshCw, Search, Calculator, Link as LinkIcon, ExternalLink, ShoppingBag, Euro, Clock, Users } from 'lucide-react';
+import { Gift, Calendar, Plus, Trash, Pencil, Lightbulb, RefreshCw, Search, Calculator, Link as LinkIcon, ExternalLink, ShoppingBag, Euro, Clock, Users, Camera } from 'lucide-react';
 import { AdUnit, GiftImage } from '../ui/Shared';
 import HomeScreen from './HomeScreen';
 import { truncateText } from '../../utils/helpers';
@@ -49,7 +49,7 @@ const MainContent = (props) => {
             )}
             <div className="max-w-4xl mx-auto pb-20 fade-in">
                 <div className="flex justify-between items-start mb-4">
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-start gap-4">
                         {activePerson.foto ? (
                             <img 
                                 src={activePerson.foto}
@@ -67,7 +67,7 @@ const MainContent = (props) => {
                         )}
                         <div>
                             <div className="flex items-center gap-3">
-                                <h2 className="text-3xl font-bold">{truncateText(activePerson.nome, 30)}</h2>
+                                <h2 className="text-3xl lg:text-5xl font-bold">{truncateText(activePerson.nome, 30)}</h2>
                                 <button onClick={openEditPersonModal} className="text-gray-400 hover:text-indigo-600 transition" title="Modifica">
                                     <Pencil size={20} />
                                 </button>
@@ -122,22 +122,30 @@ const MainContent = (props) => {
                         <h3 className="font-bold flex items-center gap-2" style={{ color: currentTheme.textAccent }}>
                             <Lightbulb size={18} /> Ti consiglio di regalare: <span className="underline">{activeTab}</span>
                         </h3>
-                        <button onClick={() => updateSuggestions(activeTab)} className="text-xs flex items-center gap-1 px-2 py-1 rounded hover:opacity-70 transition" style={{ color: currentTheme.textAccent }}>
+                        <button onClick={() => updateSuggestions(activeTab)} className="flex-shrink-0 text-xs flex items-center gap-1 px-2 py-1 rounded hover:opacity-70 transition" style={{ color: currentTheme.textAccent }}>
                             <RefreshCw size={12} /> Rinnova
                         </button>
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        {suggerimenti.map((s, i) => (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        {suggerimenti.slice(0, 4).map((s, i) => (
                             <a
                                 key={i}
                                 href={s.link}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="bg-white border border-gray-200 p-3 rounded-lg hover:shadow-md transition text-center group relative"
+                                target="_blank" rel="noreferrer"
+                                className="bg-white border border-gray-200 p-2 rounded-lg hover:shadow-md transition flex items-center gap-3"
                                 style={s.link && s.link.includes('amazon.it') ? { backgroundColor: '#FE6100', color: 'white' } : {}}
                             >
-                                <span className="text-sm font-bold block" style={s.link && s.link.includes('amazon.it') ? { color: 'white' } : { color: currentTheme.primary }}>{s.nome}</span>
-                                <ExternalLink size={12} className="absolute top-2 right-2 text-gray-300" style={s.link && s.link.includes('amazon.it') ? { color: 'white' } : {}} />
+                                <div className="w-16 h-16 rounded-md flex-shrink-0 bg-gray-100 flex items-center justify-center overflow-hidden">
+                                    {s.img ? (
+                                        <img src={s.img} alt={s.nome} className="w-full h-full object-cover" />
+                                    ) : (
+                                        <Camera size={24} className="text-gray-400" />
+                                    )}
+                                </div>
+                                <div className="flex-1">
+                                    <span className="font-bold text-sm" style={s.link && s.link.includes('amazon.it') ? { color: 'white' } : { color: currentTheme.primary }}>{truncateText(s.nome, 50)}</span>
+                                </div>
+                                <ExternalLink size={16} className="text-gray-400" style={s.link && s.link.includes('amazon.it') ? { color: 'white' } : {}} />
                             </a>
                         ))}
                     </div>
@@ -173,14 +181,14 @@ const MainContent = (props) => {
                         getFilteredGifts().map((r, i) => {
                             const occ = calcolaOccorrenza(r._evtData, r.anno, r._evtTipo);
                             return (
-                                <div key={i} className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm hover:shadow-md transition flex flex-col sm:flex-row gap-4 group relative min-h-[100px]">
-                                    <div className="w-full sm:w-24 h-24 bg-gray-100 rounded-lg flex-shrink-0 overflow-hidden flex items-center justify-center border border-gray-200">
+                                <div key={i} className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm hover:shadow-md transition flex flex-row gap-4 group relative min-h-[100px]">
+                                    <div className="w-24 h-24 bg-gray-100 rounded-lg flex-shrink-0 overflow-hidden flex items-center justify-center border border-gray-200">
                                         <GiftImage src={r.img} />
                                     </div>
                                     <div className="flex-1">
                                         <div className="flex justify-between items-start">
                                             <div>
-                                                <h4 className="font-bold text-xl">{r.oggetto}</h4>
+                                                <h4 className="font-bold text-lg">{r.oggetto}</h4>
                                                 {activeTab === "Tutti" && <span className="text-xs font-bold uppercase tracking-wider" style={{ color: currentTheme.secondary }}>{r._evtTipo}</span>}
                                             </div>
                                             <div className="text-right">
@@ -212,14 +220,14 @@ const MainContent = (props) => {
                                                 </span>
                                             )}
                                         </div>
-                                    </div>
-                                    <div className="absolute bottom-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition bg-white/90 p-1 rounded shadow-sm">
-                                        <button onClick={() => openEditGiftModal(r, r._rIdx, r._eIdx, r._evtTipo)} className="p-1.5 bg-gray-100 rounded hover:opacity-80">
-                                            <Pencil size={16} />
-                                        </button>
-                                        <button onClick={() => handleDeleteSingleGift(r._rIdx, r._eIdx)} className="p-1.5 bg-gray-100 text-red-600 rounded hover:bg-red-100">
-                                            <Trash size={16} />
-                                        </button>
+                                        <div className="mt-4 flex justify-end gap-2 sm:absolute sm:bottom-3 sm:right-3 sm:mt-0 sm:bg-white/90 sm:p-1 sm:rounded-lg sm:shadow-sm sm:opacity-0 sm:group-hover:opacity-100 transition">
+                                            <button onClick={() => openEditGiftModal(r, r._rIdx, r._eIdx, r._evtTipo)} className="p-1.5 bg-gray-100 rounded hover:opacity-80">
+                                                <Pencil size={16} />
+                                            </button>
+                                            <button onClick={() => handleDeleteSingleGift(r._rIdx, r._eIdx)} className="p-1.5 bg-gray-100 text-red-600 rounded hover:bg-red-100">
+                                                <Trash size={16} />
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             );

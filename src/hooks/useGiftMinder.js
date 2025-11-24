@@ -89,13 +89,9 @@ export const useGiftMinder = () => {
     const fetchDati = async (userId) => {
         setLoading(true);
         try {
-            const data = await fetchUserData(userId);
-            if (data) {
-                setPersone(data.persone || []);
-                setCustomRelazioni(data.custom_relazioni || []);
-                setCustomEventTypes(data.custom_event_types || []);
-                setDbRowId(data.id);
-            } else {
+            const result = await fetchUserData(userId);
+            
+            if (result === 'USER_NOT_FOUND') {
                 // First login, initialize with empty data
                 setPersone([]);
                 setCustomRelazioni([]);
@@ -105,6 +101,20 @@ export const useGiftMinder = () => {
                     custom_relazioni: [], 
                     custom_event_types: [] 
                 });
+            } else if (result) {
+                const data = result;
+                setPersone(data.persone || []);
+                setCustomRelazioni(data.custom_relazioni || []);
+                setCustomEventTypes(data.custom_event_types || []);
+                setDbRowId(data.id);
+            } else {
+                // result is null or undefined, but not 'USER_NOT_FOUND'
+                // This is an unexpected state. Do not wipe data.
+                setToastMsg('Errore inaspettato nel recupero dei dati.');
+                // We could clear local state to avoid showing stale data.
+                setPersone([]);
+                setCustomRelazioni([]);
+                setCustomEventTypes([]);
             }
         } catch (error) {
             setToastMsg('Si è verificato un errore nel recupero dei dati.');
@@ -318,7 +328,7 @@ export const useGiftMinder = () => {
             }
         }
         return uniquePool.sort(() => 0.5 - Math.random()).slice(0, 4);
-    }, [persone, refreshAmazonTrigger]);
+    }, [refreshAmazonTrigger]);
 
     const getLastGift = (personId, eventType) => {
         const person = persone.find(p => p.id === personId);
