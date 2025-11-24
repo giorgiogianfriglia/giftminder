@@ -11,18 +11,117 @@ export const THEMES = {
 
 export const DB_SUGGERIMENTI = {
     generici: [
-        { nome: "Buono Amazon", link: "https://www.amazon.it/s?k=buono+regalo&tag=giftminder-21", img: "" },
-        { nome: "Powerbank Solare", link: "https://www.amazon.it/s?k=powerbank+solare&tag=giftminder-21", img: "" },
-        { nome: "Zaino Tech", link: "https://www.amazon.it/s?k=zaino+laptop&tag=giftminder-21", img: "" },
-        { nome: "Borraccia Termica", link: "https://www.amazon.it/s?k=borraccia+termica&tag=giftminder-21", img: "" },
-        { nome: "Speaker Bluetooth", link: "https://www.amazon.it/s?k=speaker+bluetooth&tag=giftminder-21", img: "" },
-        { nome: "Organizer Scrivania", link: "https://www.amazon.it/s?k=organizer+scrivania&tag=giftminder-21", img: "" },
-        { nome: "Cuscino Viaggio", link: "https://www.amazon.it/s?k=cuscino+viaggio+memory&tag=giftminder-21", img: "" },
-        { nome: "Tazza Personalizzata", link: "https://www.amazon.it/s?k=tazza+divertente&tag=giftminder-21", img: "" },
-        { nome: "Caricatore Wireless", link: "https://www.amazon.it/s?k=caricatore+wireless&tag=giftminder-21", img: "" },
-        { nome: "Agenda Moleskine", link: "https://www.amazon.it/s?k=moleskine&tag=giftminder-21", img: "" },
-        { nome: "Penna Parker", link: "https://www.amazon.it/s?k=penna+parker&tag=giftminder-21", img: "" },
-        { nome: "Set Sommelier", link: "https://www.amazon.it/s?k=set+vino&tag=giftminder-21", img: "" }
+{ 
+        nome: "Buono Amazon", 
+        link: "https://www.amazon.it/s?k=buono+regalo&tag=giftminder-21", 
+        img: "https://images.unsplash.com/photo-1621946849479-7a5525531d0d?auto=format&fit=crop&w=400&q=80" 
+    },
+    { 
+        nome: "Powerbank Solare", 
+        link: "https://www.amazon.it/s?k=powerbank+solare&tag=giftminder-21", 
+        img: "https://images.unsplash.com/photo-1596707328590-7c569c760844?auto=format&fit=crop&w=400&q=80" 
+    },
+    { 
+        nome: "Zaino Tech", 
+        link: "https://www.amazon.it/s?k=zaino+laptop&tag=giftminder-21", 
+        img: "https://images.unsplash.com/photo-1591561954519-ce279ad22e17?auto=format&fit=crop&w=400&q=80" 
+    },
+    { 
+        nome: "Borraccia Termica", 
+        link: "https://www.amazon.it/s?k=borraccia+termica&tag=giftminder-21", 
+        img: "https://images.unsplash.com/photo-1620077759322-1d70d3215234?auto=format&fit=crop&w=400&q=80" 
+    },
+    { 
+        nome: "Speaker Bluetooth", 
+        link: "https://www.amazon.it/s?k=speaker+bluetooth&tag=giftminder-21", 
+        img: "https://images.unsplash.com/photo-1582210874558-868779948493?auto=format&fit=crop&w=400&q=80" 
+    },
+    { 
+        nome: "Organizer Scrivania", 
+        link: "https://www.amazon.it/s?k=organizer+scrivania&tag=giftminder-21", 
+        img: "https://images.unsplash.com/photo-1546776310-eef46c827361?auto=format&fit=crop&w=400&q=80" 
+    },
+    { 
+        nome: "Cuscino Viaggio", 
+        link: "https://www.amazon.it/s?k=cuscino+viaggio+memory&tag=giftminder-21", 
+        img: "https://images.unsplash.com/photo-1520038410233-7141be7e8929?auto=format&fit=crop&w=400&q=80" 
+    },
+    { 
+        nome: "Tazza Personalizzata", 
+        link: "https://www.amazon.it/s?k=tazza+divertente&tag=giftminder-21", 
+        img: "https://images.unsplash.com/photo-1578326162319-388cf464670c?auto=format&fit=crop&w=400&q=80" 
+    },
+    { 
+        nome: "Caricatore Wireless", 
+        link: "https://www.amazon.it/s?k=caricatore+wireless&tag=giftminder-21", 
+        img: "https://images.unsplash.com/photo-1583091216954-469b8c0a2a19?auto=format&fit=crop&w=400&q=80" 
+    },
+    { 
+        nome: "Agenda Moleskine", 
+        link: "https://www.amazon.it/s?k=moleskine&tag=giftminder-21", 
+        img: "https://images.unsplash.com/photo-1517840806767-cc797304e792?auto=format&fit=crop&w=400&q=80" 
+    },
+    { 
+        nome: "Penna Parker", 
+        link: "https://www.amazon.it/s?k=penna+parker&tag=giftminder-21", 
+        img: "https://images.unsplash.com/photo-1594636797501-4f56at61550c?auto=format&fit=crop&w=400&q=80" 
+    },
+    { 
+        nome: "Set Sommelier", 
+        link: "https://www.amazon.it/s?k=set+vino&tag=giftminder-21", 
+        img: "https://images.unsplash.com/photo-1598460591147-36e2f1c834a3?auto=format&fit=crop&w=400&q=80" 
+    },
+    // --- Lista Aggiuntiva (10 Prodotti) ---
+    { 
+        nome: "Diffusore Aromi", 
+        link: "https://www.amazon.it/s?k=diffusore+oli+essenziali&tag=giftminder-21", 
+        img: "https://images.unsplash.com/photo-1608571423902-eed4a5e84e43?auto=format&fit=crop&w=400&q=80" 
+    },
+    { 
+        nome: "Lunch Box Termico", 
+        link: "https://www.amazon.it/s?k=lunch+box+porta+pranzo&tag=giftminder-21", 
+        img: "src/components/img/lunchbox.jpeg"
+      },
+    { 
+        nome: "Supporto Laptop", 
+        link: "https://www.amazon.it/s?k=supporto+pc+portatile&tag=giftminder-21", 
+        img: "https://images.unsplash.com/photo-1616628188894-62a0a6ee551e?auto=format&fit=crop&w=400&q=80" 
+    },
+    { 
+        nome: "Candela Profumata", 
+        link: "https://www.amazon.it/s?k=candela+profumata+regalo&tag=giftminder-21", 
+        img: "https://images.unsplash.com/photo-1602523961358-f9f03dd557db?auto=format&fit=crop&w=400&q=80" 
+    },
+    { 
+        nome: "Trousse da Viaggio", 
+        link: "https://www.amazon.it/s?k=beauty+case+viaggio&tag=giftminder-21", 
+        img: "https://images.unsplash.com/photo-1603571168541-1f92e22c91ac?auto=format&fit=crop&w=400&q=80" 
+    },
+    { 
+        nome: "Luce da Lettura", 
+        link: "https://www.amazon.it/s?k=luce+lettura+clip&tag=giftminder-21", 
+        img: "https://images.unsplash.com/photo-1534431980846-979d39fa7334?auto=format&fit=crop&w=400&q=80" 
+    },
+    { 
+        nome: "Kit Coltivazione", 
+        link: "https://www.amazon.it/s?k=kit+bonsai+o+erbe&tag=giftminder-21", 
+        img: "https://images.unsplash.com/photo-1595180425712-421b8f8705f1?auto=format&fit=crop&w=400&q=80" 
+    },
+    { 
+        nome: "Cuffie Wireless", 
+        link: "https://www.amazon.it/s?k=cuffie+bluetooth+in+ear&tag=giftminder-21", 
+        img: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=400&q=80" 
+    },
+    { 
+        nome: "Set Tagliere Formaggi", 
+        link: "https://www.amazon.it/s?k=set+tagliere+formaggi&tag=giftminder-21", 
+        img: "https://images.unsplash.com/photo-1579844961858-a9686940f898?auto=format&fit=crop&w=400&q=80" 
+    },
+    { 
+        nome: "Localizzatore Chiavi", 
+        link: "https://www.amazon.it/s?k=trova+chiavi+bluetooth&tag=giftminder-21", 
+        img: "https://images.unsplash.com/photo-1633122219543-a0a149c98686?auto=format&fit=crop&w=400&q=80" 
+    }
     ],
     Compleanno: [
         { nome: "Kindle", link: "https://www.amazon.it/s?k=kindle&tag=giftminder-21", img: "https://i.pinimg.com/736x/83/45/f2/8345f21b65d62ed178a0efbc7c9845a3.jpg" },

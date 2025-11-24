@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Plus, Settings, Archive, Home, Users, Menu, LogOut, Gift } from 'lucide-react';
 import PeopleList from './PeopleList';
 
-import logo from '/logo.png';
+const logo = `${import.meta.env.BASE_URL}logo.png`;
 const Sidebar = ({
     themeStyles,
     openNewPersonModal,

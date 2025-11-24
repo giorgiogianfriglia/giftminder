@@ -180,7 +180,7 @@ export const useGiftMinder = () => {
         const currentNames = suggerimenti.map(s => s.nome);
         let candidates = uniquePool.filter(item => !currentNames.includes(item.nome));
         if (candidates.length < 3) candidates = uniquePool;
-        setSuggerimenti(candidates.sort(() => 0.5 - Math.random()).slice(0, 3));
+        setSuggerimenti(candidates.sort(() => 0.5 - Math.random()).slice(0, 4));
     };
 
     const handleSidebarClick = (item) => { setSelectedUid(item.uidToSelect); setActiveTab("Tutti"); setSearchTerm(""); updateSuggestions("Tutti"); setShowPeopleList(false); };
@@ -356,6 +356,7 @@ export const useGiftMinder = () => {
         handleSaveRegalo, handleAddEventToPerson, askConfirm, executeConfirm, handleDeleteSingleGift, handleArchive, getFilteredGifts,
         getTotaleSpeso, handleEmailAuth, handleGoogleLogin, handleLogout, handleRestore, handlePermanentDelete, handlePhotoUpload,
         handleSidebarClick, handleHomeClick, handleSelectUid, handleTabChange, getActivePerson, getHeaderInfo, getStatsBreakdown,
-        handleRefreshAmazonSuggestions
+        handleRefreshAmazonSuggestions,
+        updateSuggestions
     };
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { X } from 'lucide-react';
+import { X, Camera } from 'lucide-react';
 
 export const GiftModal = ({
     onClose,
@@ -75,17 +75,26 @@ export const GiftModal = ({
                             </div>
                         </div>
                     )}
-                    {editingGiftIndex === null && activePerson && (
+                    {editingGiftIndex === null && (
                         <div className="bg-amber-50 border border-amber-100 rounded-lg p-3">
                             <div className="flex justify-between items-center mb-2">
-                                <h4 className="text-xs font-bold text-amber-800">💡 Consigli Rapidi ({giftTargetEvent})</h4>
+                                <h4 className="text-xs font-bold text-amber-800">💡 Consigli Rapidi {giftTargetEvent ? `(${giftTargetEvent})` : '(Generici)'}</h4>
                                 <button onClick={() => updateSuggestions(giftTargetEvent)} className="text-[10px] text-amber-600 hover:underline">Rinnova</button>
                             </div>
-                            <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
-                                {suggerimenti.map((s, i) => (
-                                    <a key={i} href={s.link} target="_blank" rel="noreferrer" className="flex-shrink-0 bg-white border border-amber-200 px-3 py-2 rounded text-center min-w-[100px] hover:shadow-sm">
-                                        <span className="text-xs font-bold text-gray-800 block truncate">{s.nome}</span>
-                                        <span className="text-[10px] text-amber-500">Amazon &rarr;</span>
+                            <div className="grid grid-cols-3 gap-3">
+                                {suggerimenti.slice(0, 3).map((s, i) => (
+                                    <a key={i} href={s.link} target="_blank" rel="noreferrer" className="bg-white border border-amber-200 rounded-lg text-center hover:shadow-md transition-shadow overflow-hidden flex flex-col">
+                                        <div className="w-full h-20 bg-gray-100 flex items-center justify-center overflow-hidden flex-shrink-0">
+                                            {s.img ? (
+                                                <img src={s.img} alt={s.nome} className="w-full h-full object-cover" />
+                                            ) : (
+                                                <Camera size={32} className="text-gray-300" />
+                                            )}
+                                        </div>
+                                        <div className="p-2 flex-1 flex flex-col justify-center">
+                                            <span className="text-xs font-bold text-gray-800 block truncate">{s.nome}</span>
+                                            <span className="text-[10px] text-amber-500">Amazon &rarr;</span>
+                                        </div>
                                     </a>
                                 ))}
                             </div>

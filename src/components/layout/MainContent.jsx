@@ -67,7 +67,7 @@ const MainContent = (props) => {
                         )}
                         <div>
                             <div className="flex items-center gap-3">
-                                <h2 className="text-3xl lg:text-5xl font-bold">{truncateText(activePerson.nome, 30)}</h2>
+                                <h2 className="text-xl font-bold">{truncateText(activePerson.nome, 30)}</h2>
                                 <button onClick={openEditPersonModal} className="text-gray-400 hover:text-indigo-600 transition" title="Modifica">
                                     <Pencil size={20} />
                                 </button>
@@ -133,7 +133,7 @@ const MainContent = (props) => {
                                 href={s.link}
                                 target="_blank" rel="noreferrer"
                                 className="bg-white border border-gray-200 p-2 rounded-lg hover:shadow-md transition flex items-center gap-3"
-                                style={s.link && s.link.includes('amazon.it') ? { backgroundColor: '#FE6100', color: 'white' } : {}}
+                                style={s.link && s.link.includes('amazon.it') ? { backgroundColor: '#fe6100ff', color: 'white' } : {}}
                             >
                                 <div className="w-16 h-16 rounded-md flex-shrink-0 bg-gray-100 flex items-center justify-center overflow-hidden">
                                     {s.img ? (

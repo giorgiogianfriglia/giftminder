@@ -15,7 +15,7 @@ const AuthScreen = ({
         <div className="h-screen flex items-center justify-center bg-gray-100 p-4 font-sans">
             <div className="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md border border-gray-200">
                 <div className="text-center mb-8">
-                    <div className="w-24 h-24 mx-auto mb-4"><img src="/logo.png" alt="GiftMinder Logo" className="w-full h-full object-contain" /></div>
+                    <div className="w-24 h-24 mx-auto mb-4"><img src={`${import.meta.env.BASE_URL}logo.png`} alt="GiftMinder Logo" className="w-full h-full object-contain" /></div>
                     <h1 className="text-3xl font-bold text-gray-800">GiftMinder</h1>
                 </div>
                 <div className="flex bg-gray-100 p-1 rounded-lg mb-6">
