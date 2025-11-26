@@ -1,5 +1,5 @@
-export const RELAZIONI_DEFAULT = ["Amico/a", "Moglie", "Marito", "Fidanzato/a", "Papà", "Mamma", "Figlio/a", "Fratello/Sorella", "Collega"];
-export const EVENT_TYPES_DEFAULT = ["Compleanno", "Natale", "Anniversario", "San Valentino", "Onomastico", "Laurea"];
+export const RELAZIONI_DEFAULT = ["Amico/a", "Moglie", "Marito", "Fidanzato/a", "Papà", "Mamma", "Figlio/a", "Fratello", "Sorella", "Collega"];
+export const EVENT_TYPES_DEFAULT = ["Compleanno", "Natale", "Anniversario", "San Valentino", "Onomastico", "Laurea", "Epifania", "Festa del Papà"];
 
 export const THEMES = {
     default: { id: 'default', name: 'Classico', primary: '#4f46e5', secondary: '#f59e0b', accent: '#e0e7ff', textAccent: '#3730a3' },

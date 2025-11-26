@@ -9,11 +9,28 @@ export const isValidUrl = (urlString) => {
 };
 
 export const calcolaGiorni = (dataStr) => {
+    if (!dataStr) return Infinity;
     const oggi = new Date();
-    const eventoDate = new Date(dataStr);
-    eventoDate.setFullYear(oggi.getFullYear());
-    if (eventoDate < new Date(oggi.setHours(0, 0, 0, 0))) eventoDate.setFullYear(oggi.getFullYear() + 1);
-    const diff = eventoDate - new Date();
+    oggi.setHours(0, 0, 0, 0);
+
+    let annoEvento = oggi.getFullYear();
+    let eventoDate;
+
+    if (dataStr.length === 5 && dataStr.includes('-')) { // Formato MM-DD
+        const [mese, giorno] = dataStr.split('-').map(Number);
+        eventoDate = new Date(annoEvento, mese - 1, giorno);
+    } else { // Formato YYYY-MM-DD
+        eventoDate = new Date(dataStr);
+        eventoDate.setFullYear(annoEvento); // Usa l'anno corrente per il confronto
+    }
+    
+    eventoDate.setHours(0, 0, 0, 0);
+
+    if (eventoDate < oggi) {
+        eventoDate.setFullYear(annoEvento + 1);
+    }
+
+    const diff = eventoDate.getTime() - oggi.getTime();
     return Math.ceil(diff / (1000 * 60 * 60 * 24));
 };
 
@@ -44,10 +61,19 @@ export const formatCurrency = (amount) => {
     return amount.toLocaleString('it-IT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 };
 
+export const formatFixedDate = (mmdd) => {
+    if (!mmdd || !mmdd.includes('-')) return '';
+    const [month, day] = mmdd.split('-');
+    // Create a date object (year is irrelevant) to use toLocaleDateString for formatting
+    const date = new Date(2000, parseInt(month, 10) - 1, parseInt(day, 10));
+    return date.toLocaleDateString('it-IT', { month: 'long', day: 'numeric' });
+};
+
 export async function getCroppedImg(image, crop) {
     if (!crop || !image) {
         return null;
     }
+
 
     const canvas = document.createElement('canvas');
     const scaleX = image.naturalWidth / image.width;

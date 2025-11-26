@@ -75,7 +75,7 @@ export const GiftModal = (props) => {
                                     <label className="block text-sm font-bold mb-1">Occasione</label>
                                     <div className="flex gap-2">
                                         <select className="w-full border border-gray-200 rounded-lg p-3" value={props.giftTargetEvent} onChange={e => { props.setGiftTargetEvent(e.target.value); props.updateSuggestions(e.target.value); }} disabled={!props.activePerson}>
-                                            {props.activePerson && props.activePerson.eventi && props.activePerson.eventi.filter(e => !e.archived).map(e => <option key={e.tipo} value={e.tipo}>{e.tipo}</option>)}
+                                            {props.activePerson && props.activePerson.eventi && [...new Set(props.activePerson.eventi.filter(e => !e.archived).map(e => e.tipo))].map(tipo => <option key={tipo} value={tipo}>{tipo}</option>)}
                                             {(!props.activePerson || !props.activePerson.eventi || props.activePerson.eventi.filter(e => !e.archived).length === 0) && <option value="" disabled>Nessun evento</option>}
                                         </select>
                                         <button onClick={() => props.setShowAddEventModal(true)} className="bg-gray-100 px-3 rounded-lg font-bold" disabled={!props.activePerson}>+</button>

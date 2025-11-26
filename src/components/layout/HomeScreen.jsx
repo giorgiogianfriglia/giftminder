@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Gift, Calendar, Plus, Users, Star, RefreshCw, Camera } from 'lucide-react';
 import PeopleList from './PeopleList';
 
@@ -16,6 +16,21 @@ const HomeScreen = ({
     currentTheme,
     setShowPeopleList
 }) => {
+    const soonestDay = sidebarList.length > 0 ? Math.min(...sidebarList.map(p => p.nextEvent.days)) : null;
+    const soonestPeople = sidebarList.filter(p => p.nextEvent.days === soonestDay);
+    const displayCount = soonestPeople.length;
+
+    const [currentSlide, setCurrentSlide] = useState(0);
+
+    useEffect(() => {
+        if (soonestPeople.length > 1) {
+            const timer = setInterval(() => {
+                setCurrentSlide((prevSlide) => (prevSlide + 1) % soonestPeople.length);
+            }, 2000);
+            return () => clearInterval(timer);
+        }
+    }, [soonestPeople, sidebarList]);
+
     if (sidebarList.length === 0) {
         return (
             <div className="p-6 bg-slate-50 h-full flex flex-col items-center justify-center text-center">
@@ -31,14 +46,16 @@ const HomeScreen = ({
                 </button>
             </div>
         );
-    }
+    } 
 
     const nextEvent = {
-        ...sidebarList[0],
-        lastGift: getLastGift(sidebarList[0].id, sidebarList[0].nextEvent.tipo),
+        ...soonestPeople[0], // Use the first person for initial display
+        lastGift: getLastGift(soonestPeople[0].id, soonestPeople[0].nextEvent.tipo),
     };
+    
+    // Only display upcoming events that are not in the soonestPeople group
+    const upcomingEvents = sidebarList.filter(p => p.nextEvent.days !== soonestDay).slice(0, 3);
 
-    const upcomingEvents = sidebarList.slice(1, 4);
 
     return (
         <div className="p-6 bg-slate-50 h-full overflow-y-auto flex-1">
@@ -66,7 +83,9 @@ const HomeScreen = ({
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {/* Left: Next Event Details - In Scadenza */}
                         <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
-                            <h2 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">In Scadenza</h2>
+                            <h2 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">
+                                In Scadenza {displayCount > 1 && `(${displayCount})`}
+                            </h2>
                             <div className="flex items-start sm:items-center gap-6">
                                 <div className={`text-center flex-shrink-0 w-24 cursor-pointer`} onClick={() => handleSidebarClick(nextEvent)}>
                                     <div className="text-5xl font-bold" style={{ color: nextEvent.nextEvent.days < 14 ? '#E53E3E' : '#38A169' }}>
@@ -75,9 +94,41 @@ const HomeScreen = ({
                                     <div className="text-sm font-bold text-gray-500">Giorni</div>
                                 </div>
                                 <div className="w-px bg-gray-200 self-stretch hidden sm:block"></div>
-                                <div className="flex-grow cursor-pointer" onClick={() => handleSidebarClick(nextEvent)}>
-                                    <p className="text-xl font-bold">{nextEvent.nome}</p>
-                                    <p className="text-sm text-gray-500 mb-2">{nextEvent.relazione}</p>
+                                <div className="flex-grow cursor-pointer" onClick={() => handleSidebarClick(soonestPeople[currentSlide])}>
+                                    {displayCount > 1 ? (
+                                        <>
+                                            <div className="relative h-6 overflow-hidden">
+                                                {soonestPeople.map((person, index) => (
+                                                    <p
+                                                        key={person.id}
+                                                        className={`absolute w-full text-xl font-bold transition-all duration-500 ease-in-out
+                                                            ${index === currentSlide ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'}`}
+                                                        style={{ left: `${(index - currentSlide) * 100}%` }}
+                                                    >
+                                                        {person.nome}
+                                                    </p>
+                                                ))}
+                                            </div>
+                                            <p className="text-sm text-gray-500 mb-2">{soonestPeople[currentSlide].relazione}</p>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <p className="text-xl font-bold">{nextEvent.nome}</p>
+                                            <p className="text-sm text-gray-500 mb-2">{nextEvent.relazione}</p>
+                                        </>
+                                    )}
+                                    {displayCount > 1 && (
+                                        <div className="flex justify-center gap-2 mt-2">
+                                            {soonestPeople.map((_, idx) => (
+                                                <span
+                                                    key={idx}
+                                                    className={`block w-2 h-2 rounded-full cursor-pointer transition-colors
+                                                        ${idx === currentSlide ? 'bg-indigo-600' : 'bg-gray-300 hover:bg-gray-400'}`}
+                                                    onClick={(e) => { e.stopPropagation(); setCurrentSlide(idx); handleSidebarClick(soonestPeople[idx]); }}
+                                                ></span>
+                                            ))}
+                                        </div>
+                                    )}
                                     <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
                                         <span className="flex items-center gap-1.5 bg-indigo-100 text-indigo-600 font-bold px-3 py-1 rounded-full">
                                             <Calendar size={14} />

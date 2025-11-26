@@ -1,16 +1,10 @@
 import React from 'react';
 import { X, Check, Trash2 } from 'lucide-react';
 import { ImageEditor } from '../ui/ImageEditor';
-import { getCroppedImg } from '../../utils/helpers';
+import { getCroppedImg, formatFixedDate } from '../../utils/helpers';
 import { fixedEvents } from '../../utils/fixedEvents';
 
-const formatFixedDate = (mmdd) => {
-    if (!mmdd || !mmdd.includes('-')) return '';
-    const [month, day] = mmdd.split('-');
-    // Create a date object (year is irrelevant) to use toLocaleDateString for formatting
-    const date = new Date(2000, parseInt(month, 10) - 1, parseInt(day, 10));
-    return date.toLocaleDateString('it-IT', { month: 'long', day: 'numeric' });
-};
+
 
 export const PersonModal = ({ 
     onClose,
@@ -46,6 +40,20 @@ export const PersonModal = ({
     const [uploadType, setUploadType] = React.useState('url');
     const [imageToEdit, setImageToEdit] = React.useState(null);
     const fileInputRef = React.useRef(null);
+    const [isNewEventFixed, setIsNewEventFixed] = React.useState(false);
+
+    React.useEffect(() => {
+        const fixed = fixedEvents.find(fe => fe.type === newEventType);
+        if (fixed) {
+            setIsNewEventFixed(true);
+            setNewEventDate(fixed.date); 
+        } else {
+            setIsNewEventFixed(false);
+            if (!editingPersonId) {
+              setNewEventDate('');
+            }
+        }
+    }, [newEventType, setNewEventDate, editingPersonId]);
 
         const handleFileChange = (e) => {         const file = e.target.files[0];
         if (file) {
@@ -154,7 +162,13 @@ export const PersonModal = ({
                                         </div>
                                         <div>
                                             <label className="block text-sm font-bold mb-1">Data</label>
-                                            <input type="date" className="w-full border border-gray-200 rounded-lg p-2" value={newEventDate} onChange={e => setNewEventDate(e.target.value)} required />
+                                            {isNewEventFixed ? (
+                                                <div className="w-full border border-gray-200 rounded-lg p-2 bg-gray-200 text-gray-600">
+                                                    {formatFixedDate(newEventDate)}
+                                                </div>
+                                            ) : (
+                                                <input type="date" className="w-full border border-gray-200 rounded-lg p-2" value={newEventDate} onChange={e => setNewEventDate(e.target.value)} required />
+                                            )}
                                         </div>
                                     </div>
                                 </div>
@@ -175,10 +189,10 @@ export const PersonModal = ({
                                                     value={evt.tipo} 
                                                     readOnly={isFixed}
                                                     onChange={(e) => handleEditEventChange(idx, 'tipo', e.target.value)} 
-                                                    className={`w-full border p-2 rounded-md ${isFixed ? 'bg-gray-200 cursor-not-allowed' : ''}`}
+                                                    className={`w-full border border-gray-200 p-2 rounded-lg ${isFixed ? 'bg-gray-200 cursor-not-allowed' : ''}`}
                                                 />
                                                 {isFixed ? (
-                                                    <div className="w-full border p-2 rounded-md bg-gray-200 text-gray-600 cursor-not-allowed flex items-center h-[42px]">
+                                                    <div className="w-full border border-gray-200 p-2 rounded-lg bg-gray-200 text-gray-600">
                                                         {formatFixedDate(evt.data)}
                                                     </div>
                                                 ) : (
@@ -186,7 +200,7 @@ export const PersonModal = ({
                                                         type="date" 
                                                         value={evt.data} 
                                                         onChange={(e) => handleEditEventChange(idx, 'data', e.target.value)} 
-                                                        className="w-full border p-2 rounded-md" 
+                                                        className="w-full border border-gray-200 p-2 rounded-lg" 
                                                     />
                                                 )}
                                                 <button 

@@ -18,7 +18,7 @@ export const useGiftMinder = () => {
     const [currentTheme, setCurrentTheme] = useState(THEMES.default);
     const [showSettings, setShowSettings] = useState(false);
     const relazioniList = useMemo(() => [...RELAZIONI_DEFAULT, ...customRelazioni], [customRelazioni]);
-    const eventTypesList = useMemo(() => [...EVENT_TYPES_DEFAULT, ...customEventTypes], [customEventTypes]);
+    const eventTypesList = useMemo(() => [...new Set([...EVENT_TYPES_DEFAULT, ...customEventTypes])], [customEventTypes]);
 
     const [authMode, setAuthMode] = useState('login');
     const [email, setEmail] = useState("");
@@ -204,7 +204,8 @@ export const useGiftMinder = () => {
         const occ = calcolaOccorrenza(targetEvt.data, y, targetEvt.tipo);
         const typeText = activeTab === "Tutti" ? `Prossimo: ${targetEvt.tipo}` : targetEvt.tipo;
         const subtext = occ ? ` • ${occ}` : "";
-        return { date: targetEvt.data, type: typeText + subtext, partnerName: partner?.nome, partnerUid, partnerType };
+        const isFixed = targetEvt.is_fixed || (targetEvt.data && targetEvt.data.length === 5 && targetEvt.data.includes('-'));
+        return { date: targetEvt.data, type: typeText + subtext, partnerName: partner?.nome, partnerUid, partnerType, isFixed };
     };
     const headerInfo = getHeaderInfo();
 
@@ -301,7 +302,7 @@ export const useGiftMinder = () => {
         }
     };
     
-    const handleAddEventToPerson = (e) => { e.preventDefault(); let finalEventName = addEventName === "Altro" && customAddEventName.trim() ? customAddEventName.trim() : addEventName; if (finalEventName === "Altro" || !finalEventName) return; if (!activePerson || !addEventDate) return; if (new Date(addEventDate).getFullYear() > 2099) { alert("Data non valida"); return; } const updated = persone.map(p => { if (p.id === activePerson.id) { return { ...p, eventi: [...p.eventi, { tipo: finalEventName, data: addEventDate, storicoRegali: [], archived: false }] }; } return p; }); salvaSuCloud({ persone: updated }); setAddEventName("Compleanno"); setCustomAddEventName(""); setAddEventDate(""); setShowAddEventModal(false); if (showModalGift) setGiftTargetEvent(finalEventName); else setActiveTab(finalEventName); setToastMsg("Ricorrenza aggiunta!"); };
+    const handleAddEventToPerson = (e) => { e.preventDefault(); let finalEventName = addEventName === "Altro" && customAddEventName.trim() ? customAddEventName.trim() : addEventName; if (finalEventName === "Altro" || !finalEventName) return; if (!activePerson || !addEventDate) return; const eventExists = activePerson.eventi.some(evento => evento.tipo.toLowerCase() === finalEventName.toLowerCase()); if (eventExists) { setToastMsg("La ricorrenza è già presente."); setShowAddEventModal(false); setAddEventName("Compleanno"); setCustomAddEventName(""); setAddEventDate(""); return; } if (new Date(addEventDate).getFullYear() > 2099) { alert("Data non valida"); return; } const updated = persone.map(p => { if (p.id === activePerson.id) { return { ...p, eventi: [...p.eventi, { tipo: finalEventName, data: addEventDate, storicoRegali: [], archived: false }] }; } return p; }); salvaSuCloud({ persone: updated }); setAddEventName("Compleanno"); setCustomAddEventName(""); setAddEventDate(""); setShowAddEventModal(false); if (showModalGift) setGiftTargetEvent(finalEventName); else setActiveTab(finalEventName); setToastMsg("Ricorrenza aggiunta!"); };
     const askConfirm = (title, msg, action) => { setConfirmConfig({ show: true, title, msg, action }); };
     const executeConfirm = () => { if (confirmConfig.action) confirmConfig.action(); setConfirmConfig({ ...confirmConfig, show: false }); };
     const handleDeleteSingleGift = (giftIdx, eventIdx) => { askConfirm("Elimina Regalo", "Vuoi eliminare definitivamente questo regalo?", () => { const updated = persone.map(p => { if (p.id === activePerson.id) { const newEventi = [...p.eventi]; newEventi[eventIdx].storicoRegali.splice(giftIdx, 1); return { ...p, eventi: newEventi }; } return p; }); salvaSuCloud({ persone: updated }); setToastMsg("Regalo eliminato."); }); };
