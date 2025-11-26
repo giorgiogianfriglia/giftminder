@@ -12,7 +12,7 @@ const AuthScreen = ({
     themeStyles
 }) => {
     return (
-        <div className="h-screen flex items-center justify-center bg-gray-100 p-4 font-sans">
+        <div className="flex items-center justify-center p-4 font-sans h-full">
             <div className="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md border border-gray-200">
                 <div className="text-center mb-8">
                     <div className="w-24 h-24 mx-auto mb-4"><img src={`${import.meta.env.BASE_URL}logo.png`} alt="GiftMinder Logo" className="w-full h-full object-contain" /></div>

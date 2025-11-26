@@ -7,6 +7,17 @@ html {
   font-size: 14px;
 }
 
+body {
+    background-color: #f0f2f5; /* A light gray background for the area outside the box */
+}
+
+#root {
+    max-width: 1100px; /* A standard width */
+    margin: 0 auto; /* Center the box */
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); /* A subtle shadow for the box */
+    height: 100vh;
+}
+
 /* Scrollbar personalizzata */
 .custom-scroll::-webkit-scrollbar {
   width: 6px;

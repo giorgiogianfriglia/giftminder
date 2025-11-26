@@ -38,6 +38,12 @@ export const truncateText = (text, maxLength) => {
     return text.substring(0, maxLength) + '...';
 };
 
+export const formatCurrency = (amount) => {
+    if (typeof amount !== 'number') return amount;
+    // Use 'it-IT' locale for dot as thousand separator and comma for decimals
+    return amount.toLocaleString('it-IT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+};
+
 export async function getCroppedImg(image, crop) {
     if (!crop || !image) {
         return null;

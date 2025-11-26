@@ -23,7 +23,7 @@ export default function App() {
     }
 
     return (
-        <div className="h-screen flex flex-col md:flex-row bg-white text-gray-800 overflow-hidden relative">
+        <div className="flex flex-col md:flex-row bg-white text-gray-800 overflow-hidden relative h-full">
             {giftMinder.toastMsg && <Toast msg={giftMinder.toastMsg} />}
 
             {giftMinder.confirmConfig.show && (

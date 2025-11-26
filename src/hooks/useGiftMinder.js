@@ -1,8 +1,8 @@
 import { useState, useEffect, useMemo } from 'react';
 import { supabase } from '../supabaseClient';
-import { fetchUserData, saveUserData, uploadAvatar } from '../api/userData';
+import { fetchUserData, saveUserData, uploadAvatar, uploadGiftImage } from '../api/userData';
 import { RELAZIONI_DEFAULT, EVENT_TYPES_DEFAULT, DB_SUGGERIMENTI, THEMES } from '../utils/constants';
-import { calcolaGiorni, calcolaOccorrenza, isValidUrl, isValidParticipants } from '../utils/helpers';
+import { calcolaGiorni, calcolaOccorrenza, isValidUrl, isValidParticipants, formatCurrency } from '../utils/helpers';
 import { fixedEvents } from '../utils/fixedEvents';
 
 export const useGiftMinder = () => {
@@ -284,17 +284,30 @@ export const useGiftMinder = () => {
     const resetGiftForm = () => { setGiftObj(""); setGiftYear(new Date().getFullYear()); setGiftParticipants(""); setGiftShop(""); setGiftLink(""); setGiftImg(""); setGiftPrice(""); const defaultEvt = activeTab !== 'Tutti' ? activeTab : (activePerson?.eventi[0]?.tipo || ""); setGiftTargetEvent(defaultEvt); setEditingGiftIndex(null); setEditingGiftEventIndex(null); updateSuggestions(defaultEvt); };
     const openNewGiftModal = () => { resetGiftForm(); setShowModalGift(true); };
     const openEditGiftModal = (regalo, giftIdx, eventIdx, eventType) => { resetGiftForm(); setGiftObj(regalo.oggetto); setGiftYear(regalo.anno); setGiftParticipants(regalo.partecipanti || ""); setGiftShop(regalo.negozio || ""); setGiftLink(regalo.link || ""); setGiftImg(regalo.img || ""); setGiftPrice(regalo.prezzo || ""); setGiftTargetEvent(eventType); setEditingGiftIndex(giftIdx); setEditingGiftEventIndex(eventIdx); setShowModalGift(true); };
-    const handleSaveRegalo = () => { if (!giftObj || !activePerson) return; if (giftLink && !isValidUrl(giftLink)) { alert("Link prodotto non valido."); return; } if (giftImg && !isValidUrl(giftImg)) { alert("Link immagine non valido."); return; } if (giftParticipants.trim() && !isValidParticipants(giftParticipants)) {
+    const handleSaveRegalo = () => { if (!giftObj || !activePerson) return; if (giftLink && !isValidUrl(giftLink)) { alert("Link prodotto non valido."); return; } if (giftParticipants.trim() && !isValidParticipants(giftParticipants)) {
         setToastMsg("I partecipanti contengono caratteri non ammessi (solo lettere, numeri, caratteri accentati, spazi, virgole e punti).");
         return;
     } let formattedPrice = 0; if (giftPrice) { let p = giftPrice.toString().replace(',', '.'); if (!isNaN(p)) formattedPrice = parseFloat(parseFloat(p).toFixed(2)); } let finalShop = giftShop.trim(); const finalLink = giftLink.trim(); if (!finalShop && finalLink) { try { const urlObj = new URL(finalLink.startsWith('http') ? finalLink : `https://${finalLink}`); finalShop = urlObj.hostname.replace('www.', ''); } catch (e) { } } const updated = persone.map(p => { if (p.id === activePerson.id) { const newEventi = [...p.eventi]; let targetIdx = newEventi.findIndex(e => e.tipo === giftTargetEvent); if (targetIdx === -1) targetIdx = 0; const regaloData = { anno: parseInt(giftYear), oggetto: giftObj, partecipanti: giftParticipants.trim(), negozio: finalShop, link: finalLink, img: giftImg.trim(), prezzo: formattedPrice }; if (editingGiftIndex !== null) { const editEvtIdx = editingGiftEventIndex !== null ? editingGiftEventIndex : targetIdx; newEventi[editEvtIdx].storicoRegali[editingGiftIndex] = regaloData; } else { newEventi[targetIdx].storicoRegali.unshift(regaloData); } newEventi.forEach(e => e.storicoRegali.sort((a, b) => b.anno - a.anno)); return { ...p, eventi: newEventi }; } return p; }); salvaSuCloud({ persone: updated }); setShowModalGift(false); setToastMsg(editingGiftIndex !== null ? "Aggiornato!" : "Regalo aggiunto!"); };
+    
+    const handleGiftImageUpload = async (file) => {
+        if (!session) return;
+        if (!file) return;
+        try {
+            const publicUrl = await uploadGiftImage(session.user.id, file);
+            setGiftImg(publicUrl);
+            setToastMsg("Immagine caricata!");
+        } catch (error) {
+            setToastMsg("Errore durante il caricamento dell'immagine.");
+        }
+    };
+    
     const handleAddEventToPerson = (e) => { e.preventDefault(); let finalEventName = addEventName === "Altro" && customAddEventName.trim() ? customAddEventName.trim() : addEventName; if (finalEventName === "Altro" || !finalEventName) return; if (!activePerson || !addEventDate) return; if (new Date(addEventDate).getFullYear() > 2099) { alert("Data non valida"); return; } const updated = persone.map(p => { if (p.id === activePerson.id) { return { ...p, eventi: [...p.eventi, { tipo: finalEventName, data: addEventDate, storicoRegali: [], archived: false }] }; } return p; }); salvaSuCloud({ persone: updated }); setAddEventName("Compleanno"); setCustomAddEventName(""); setAddEventDate(""); setShowAddEventModal(false); if (showModalGift) setGiftTargetEvent(finalEventName); else setActiveTab(finalEventName); setToastMsg("Ricorrenza aggiunta!"); };
     const askConfirm = (title, msg, action) => { setConfirmConfig({ show: true, title, msg, action }); };
     const executeConfirm = () => { if (confirmConfig.action) confirmConfig.action(); setConfirmConfig({ ...confirmConfig, show: false }); };
     const handleDeleteSingleGift = (giftIdx, eventIdx) => { askConfirm("Elimina Regalo", "Vuoi eliminare definitivamente questo regalo?", () => { const updated = persone.map(p => { if (p.id === activePerson.id) { const newEventi = [...p.eventi]; newEventi[eventIdx].storicoRegali.splice(giftIdx, 1); return { ...p, eventi: newEventi }; } return p; }); salvaSuCloud({ persone: updated }); setToastMsg("Regalo eliminato."); }); };
     const handleArchive = () => { askConfirm("Archivia", "Spostare nell'archivio?", () => { const updated = persone.map(p => { if (p.id === activePerson.id) { const newEventi = p.eventi.map(e => ({ ...e, archived: true })); return { ...p, eventi: newEventi }; } return p; }); salvaSuCloud({ persone: updated }); setSelectedUid(null); setToastMsg("Archiviato."); }); };
     const getFilteredGifts = () => { if (!activePerson) return []; let list = []; if (activeTab === "Tutti") { list = activePerson.eventi.flatMap((evt, eIdx) => evt.storicoRegali.map((regalo, rIdx) => ({ ...regalo, _evtTipo: evt.tipo, _evtData: evt.data, _eIdx: eIdx, _rIdx: rIdx }))); } else { const evt = activePerson.eventi.find(e => e.tipo === activeTab); if (!evt) return []; const eIdx = activePerson.eventi.indexOf(evt); list = evt.storicoRegali.map((regalo, rIdx) => ({ ...regalo, _evtTipo: evt.tipo, _evtData: evt.data, _eIdx: eIdx, _rIdx: rIdx })); } list.sort((a, b) => b.anno - a.anno); if (searchTerm.trim()) { const lower = searchTerm.toLowerCase(); list = list.filter(r => r.oggetto.toLowerCase().includes(lower) || (r.partecipanti && r.partecipanti.toLowerCase().includes(lower)) || (r.negozio && r.negozio.toLowerCase().includes(lower)) || r.anno.toString().includes(lower)); } return list; };
-    const getTotaleSpeso = () => { const gifts = activePerson.eventi.flatMap(e => e.storicoRegali); return gifts.reduce((acc, curr) => acc + (curr.prezzo || 0), 0).toFixed(2); };
+    const getTotaleSpeso = () => { const gifts = activePerson.eventi.flatMap(e => e.storicoRegali); return formatCurrency(gifts.reduce((acc, curr) => acc + (curr.prezzo || 0), 0)); };
     const handleEmailAuth = async (e) => { e.preventDefault(); setAuthLoading(true); if (authMode === 'signup') { const { error } = await supabase.auth.signUp({ email, password }); if (error) alert(error.message); else alert("Registrazione completata! Controlla la tua email per confermare il tuo account."); } else { const { error } = await supabase.auth.signInWithPassword({ email, password }); if (error) alert("Errore login."); } setAuthLoading(false); };
     const handleGoogleLogin = async () => { await supabase.auth.signInWithOAuth({ provider: 'google' }); };
     const handleLogout = async () => { await supabase.auth.signOut(); };
@@ -354,7 +367,7 @@ export const useGiftMinder = () => {
         saveCustomRelation, saveCustomEventType, saveCustomAddEventName, openNewPersonModal, openEditPersonModal,
         handleEditEventChange, handleDeleteEventFromEdit, handleAddFixedEvents, handleSavePerson, resetGiftForm, openNewGiftModal, openEditGiftModal,
         handleSaveRegalo, handleAddEventToPerson, askConfirm, executeConfirm, handleDeleteSingleGift, handleArchive, getFilteredGifts,
-        getTotaleSpeso, handleEmailAuth, handleGoogleLogin, handleLogout, handleRestore, handlePermanentDelete, handlePhotoUpload,
+        getTotaleSpeso, handleEmailAuth, handleGoogleLogin, handleLogout, handleRestore, handlePermanentDelete, handlePhotoUpload, handleGiftImageUpload,
         handleSidebarClick, handleHomeClick, handleSelectUid, handleTabChange, getActivePerson, getHeaderInfo, getStatsBreakdown,
         handleRefreshAmazonSuggestions,
         updateSuggestions

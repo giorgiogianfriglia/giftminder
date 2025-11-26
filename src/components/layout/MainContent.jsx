@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Gift, Calendar, Plus, Trash, Pencil, Lightbulb, RefreshCw, Search, Calculator, Link as LinkIcon, ExternalLink, ShoppingBag, Euro, Clock, Users, Camera } from 'lucide-react';
 import { AdUnit, GiftImage } from '../ui/Shared';
 import HomeScreen from './HomeScreen';
-import { truncateText } from '../../utils/helpers';
+import { truncateText, formatCurrency } from '../../utils/helpers';
 
 const MainContent = (props) => {
     const {
@@ -38,7 +38,7 @@ const MainContent = (props) => {
     }
 
     return (
-        <main className="flex-1 bg-white h-2/3 md:h-full overflow-y-auto p-6 relative">
+        <main className="flex-1 bg-slate-50 h-2/3 md:h-full overflow-y-scroll p-6 relative">
             {showParticipantsTooltip && (
                 <div
                     className="fixed bg-gray-800 text-white text-sm p-3 rounded-lg shadow-lg z-50 max-w-xs"
@@ -182,45 +182,43 @@ const MainContent = (props) => {
                             const occ = calcolaOccorrenza(r._evtData, r.anno, r._evtTipo);
                             return (
                                 <div key={i} className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm hover:shadow-md transition flex flex-row gap-4 group relative min-h-[100px]">
-                                    <div className="w-24 h-24 bg-gray-100 rounded-lg flex-shrink-0 overflow-hidden flex items-center justify-center border border-gray-200">
-                                        <GiftImage src={r.img} />
-                                    </div>
-                                    <div className="flex-1">
-                                        <div className="flex justify-between items-start">
-                                            <div>
-                                                <h4 className="font-bold text-lg">{r.oggetto}</h4>
-                                                {activeTab === "Tutti" && <span className="text-xs font-bold uppercase tracking-wider" style={{ color: currentTheme.secondary }}>{r._evtTipo}</span>}
-                                            </div>
-                                            <div className="text-right">
-                                                <span className="bg-gray-100 text-gray-600 text-xs font-bold px-2 py-1 rounded flex items-center gap-1 ml-auto">
-                                                    <Clock size={12} /> {r.anno}
-                                                </span>
-                                                {occ && <span className="block text-[10px] mt-1" style={{ color: currentTheme.secondary }}>Per {occ}</span>}
-                                            </div>
-                                        </div>
-                                        <div className="flex flex-wrap gap-3 mt-2 text-sm text-gray-600">
-                                            {(r.negozio || r.link) && (
-                                                <span className="flex items-center gap-1">
-                                                    <ShoppingBag size={14} /> {r.link ? (<a href={r.link} target="_blank" rel="noreferrer" className="hover:underline flex items-center gap-0.5 font-medium" style={{ color: currentTheme.secondary }}>{r.negozio || "Link"} <ExternalLink size={10} /></a>) : r.negozio}
-                                                </span>
-                                            )}
-                                            {r.prezzo > 0 && <span className="flex items-center gap-1 font-bold text-green-600"><Euro size={14} /> {r.prezzo.toFixed(2)}</span>}
-                                            {r.partecipanti && (
-                                                <span 
-                                                    className="flex items-center gap-1 text-gray-600 cursor-pointer relative"
-                                                    onClick={(e) => {
-                                                        setTooltipContent(r.partecipanti);
-                                                        setTooltipPosition({ x: e.clientX, y: e.clientY });
-                                                        setShowParticipantsTooltip(true);
-                                                    }}
-                                                    onMouseLeave={() => setShowParticipantsTooltip(false)}
-                                                >
-                                                    <Users size={14} /> 
-                                                    {truncateText(r.partecipanti, 45)}
-                                                </span>
-                                            )}
-                                        </div>
-                                        <div className="mt-4 flex justify-end gap-2 sm:absolute sm:bottom-3 sm:right-3 sm:mt-0 sm:bg-white/90 sm:p-1 sm:rounded-lg sm:shadow-sm sm:opacity-0 sm:group-hover:opacity-100 transition">
+                                                                                                    <div className="w-24 h-24 bg-gray-100 rounded-lg flex-shrink-0 overflow-hidden flex items-center justify-center border border-gray-200">
+                                                                                                        <GiftImage src={r.img} />
+                                                                                                    </div>
+                                                                                                    <div className="flex-1">
+                                                                                                        <div className="flex justify-between items-start">
+                                                                                                            <div>
+                                                                                                                <h4 className="font-bold text-lg">{r.oggetto}</h4>
+                                                                                                                {activeTab === "Tutti" && <span className="text-xs font-bold uppercase tracking-wider" style={{ color: currentTheme.secondary }}>{r._evtTipo}</span>}
+                                                                                                            </div>
+                                                                                                            <div className="text-right">
+                                                                                                                <span className="bg-gray-100 text-gray-600 text-xs font-bold px-2 py-1 rounded flex items-center gap-1 ml-auto">
+                                                                                                                    <Clock size={12} /> {r.anno}
+                                                                                                                </span>
+                                                                                                                {occ && <span className="block text-[10px] mt-1" style={{ color: currentTheme.secondary }}>Per {occ}</span>}
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                        <div className="flex flex-wrap gap-3 mt-2 text-sm text-gray-600">
+                                                                                                            {(r.negozio || r.link) && (
+                                                                                                                <span className="flex items-center gap-1">
+                                                                                                                    <ShoppingBag size={14} /> {r.link ? (<a href={r.link} target="_blank" rel="noreferrer" className="hover:underline flex items-center gap-0.5 font-medium" style={{ color: currentTheme.secondary }}>{r.negozio || "Link"} <ExternalLink size={10} /></a>) : r.negozio}
+                                                                                                                </span>
+                                                                                                            )}
+                                                                                                                                             {r.prezzo > 0 && <span className="flex items-center gap-1 font-bold text-green-600"><Euro size={14} /> {formatCurrency(r.prezzo)}</span>}                                            {r.partecipanti && (
+                                                                                                                <span
+                                                                                                                    className="flex items-center gap-1 text-gray-600 cursor-pointer relative"
+                                                                                                                    onClick={(e) => {
+                                                                                                                        setTooltipContent(r.partecipanti);
+                                                                                                                        setTooltipPosition({ x: e.clientX, y: e.clientY });
+                                                                                                                        setShowParticipantsTooltip(true);
+                                                                                                                    }}
+                                                                                                                    onMouseLeave={() => setShowParticipantsTooltip(false)}
+                                                                                                                >
+                                                                                                                    <Users size={14} />
+                                                                                                                    {truncateText(r.partecipanti, 45)}
+                                                                                                                </span>
+                                                                                                            )}
+                                                                                                        </div>                                        <div className="mt-4 flex justify-end gap-2 sm:absolute sm:bottom-3 sm:right-3 sm:mt-0 sm:bg-white/90 sm:p-1 sm:rounded-lg sm:shadow-sm sm:opacity-0 sm:group-hover:opacity-100 transition">
                                             <button onClick={() => openEditGiftModal(r, r._rIdx, r._eIdx, r._evtTipo)} className="p-1.5 bg-gray-100 rounded hover:opacity-80">
                                                 <Pencil size={16} />
                                             </button>

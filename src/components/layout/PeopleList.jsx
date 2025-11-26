@@ -24,7 +24,7 @@ const PeopleList = ({
                                     <img
                                         src={item.foto}
                                         alt={item.nome}
-                                        className="w-10 h-10 rounded-full object-cover border-2"
+                                        className="w-14 h-14 rounded-full object-cover border-2"
                                         style={{ borderColor: selectedUid === item.uidToSelect ? currentTheme.primary : 'transparent' }}
                                     />
                                 ) : (

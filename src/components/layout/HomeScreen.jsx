@@ -41,11 +41,11 @@ const HomeScreen = ({
     const upcomingEvents = sidebarList.slice(1, 4);
 
     return (
-        <div className="p-6 bg-slate-50 h-full overflow-y-auto">
-            <div className="max-w-full mx-auto">
+        <div className="p-6 bg-slate-50 h-full overflow-y-auto flex-1">
+            <div className="max-w-4xl mx-auto">
                 {/* <h1 className="text-3xl font-bold mb-6">Home</h1> */}
 
-                <div className="grid grid-cols-1 lg:grid-cols-[250px_1fr] gap-6 mb-6">
+                <div className="grid grid-cols-1 lg:grid-cols-[140px_1fr] gap-6 mb-6">
                     {/* Left Column: Action Buttons */}
                     <div className="grid grid-cols-3 lg:grid-cols-1 gap-4">
                         <button onClick={openNewPersonModal} className="bg-white text-center p-4 rounded-xl shadow-sm border border-gray-200 hover:bg-gray-50 transition">

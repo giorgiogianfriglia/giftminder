@@ -48,7 +48,7 @@ const Sidebar = ({
                     <button onClick={handleHomeClick} className="p-1.5 rounded shadow hover:opacity-90 transition" style={themeStyles.primary}>
                         <Home size={20} />
                     </button>
-                    <div className="relative" ref={menuRef}>
+                    <div className="relative md:hidden" ref={menuRef}>
                         <button onClick={() => setMenuOpen(!menuOpen)} className="p-1.5 rounded shadow hover:opacity-90 transition" style={themeStyles.primary}>
                             <Menu size={20} />
                         </button>
@@ -73,7 +73,7 @@ const Sidebar = ({
                 </div>
             </div>
 
-            <div className={`${showPeopleList ? 'fixed inset-0 bg-white z-20 h-screen' : 'hidden'} md:block md:static md:h-auto`}>
+            <div className={`${showPeopleList ? 'fixed inset-0 bg-white z-20 h-screen' : 'hidden'} md:block md:static md:flex-1 md:overflow-y-auto`}>
                 <div className="p-4 border-b border-gray-200 flex justify-between items-center sticky top-0 bg-slate-50 md:hidden">
                     <div className="flex items-center gap-2 font-bold text-lg" style={themeStyles.textPrimary}>
                         <img src={logo} className="w-6 h-6 object-contain" alt="logo" /> GiftMinder
@@ -93,6 +93,16 @@ const Sidebar = ({
                     currentTheme={currentTheme}
                     themeStyles={themeStyles}
                 />
+            </div>
+            <div className="hidden md:flex justify-between items-center p-2 border-t border-gray-200 bg-slate-50">
+                <div>
+                    <button onClick={() => setShowSettings(true)} className="p-2 text-sm text-gray-600 hover:bg-gray-200 rounded-md transition">
+                        <Settings size={18} />
+                    </button>
+                </div>
+                <button onClick={() => setShowArchive(true)} className="p-2 text-sm text-gray-600 hover:bg-gray-200 rounded-md transition">
+                    <Archive size={18} />
+                </button>
             </div>
         </aside>
     );

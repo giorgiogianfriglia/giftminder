@@ -11,71 +11,71 @@ export const THEMES = {
 
 export const DB_SUGGERIMENTI = {
     generici: [
-{ 
+    { 
         nome: "Buono Amazon", 
         link: "https://www.amazon.it/s?k=buono+regalo&tag=giftminder-21", 
-        img: "https://images.unsplash.com/photo-1621946849479-7a5525531d0d?auto=format&fit=crop&w=400&q=80" 
+        img: "src/components/img/buonoamazon.png" 
     },
     { 
         nome: "Powerbank Solare", 
         link: "https://www.amazon.it/s?k=powerbank+solare&tag=giftminder-21", 
-        img: "https://images.unsplash.com/photo-1596707328590-7c569c760844?auto=format&fit=crop&w=400&q=80" 
+        img: "src/components/img/solarpowerbank.jpeg" 
     },
     { 
         nome: "Zaino Tech", 
         link: "https://www.amazon.it/s?k=zaino+laptop&tag=giftminder-21", 
-        img: "https://images.unsplash.com/photo-1591561954519-ce279ad22e17?auto=format&fit=crop&w=400&q=80" 
+        img: "src/components/img/zainotech.jpeg" 
     },
     { 
         nome: "Borraccia Termica", 
         link: "https://www.amazon.it/s?k=borraccia+termica&tag=giftminder-21", 
-        img: "https://images.unsplash.com/photo-1620077759322-1d70d3215234?auto=format&fit=crop&w=400&q=80" 
+        img: "src/components/img/Borraccia Termica.jpeg" 
     },
     { 
         nome: "Speaker Bluetooth", 
         link: "https://www.amazon.it/s?k=speaker+bluetooth&tag=giftminder-21", 
-        img: "https://images.unsplash.com/photo-1582210874558-868779948493?auto=format&fit=crop&w=400&q=80" 
+        img: "src/components/img/Speaker Bluetooth.jpeg" 
     },
     { 
         nome: "Organizer Scrivania", 
         link: "https://www.amazon.it/s?k=organizer+scrivania&tag=giftminder-21", 
-        img: "https://images.unsplash.com/photo-1546776310-eef46c827361?auto=format&fit=crop&w=400&q=80" 
+        img: "src/components/img/Organizer Scrivania.jpeg" 
     },
     { 
         nome: "Cuscino Viaggio", 
         link: "https://www.amazon.it/s?k=cuscino+viaggio+memory&tag=giftminder-21", 
-        img: "https://images.unsplash.com/photo-1520038410233-7141be7e8929?auto=format&fit=crop&w=400&q=80" 
+        img: "src/components/img/cuscinoviaggio.jpeg" 
     },
     { 
         nome: "Tazza Personalizzata", 
         link: "https://www.amazon.it/s?k=tazza+divertente&tag=giftminder-21", 
-        img: "https://images.unsplash.com/photo-1578326162319-388cf464670c?auto=format&fit=crop&w=400&q=80" 
+        img: "src/components/img/Tazza Personalizzata.jpeg" 
     },
     { 
         nome: "Caricatore Wireless", 
         link: "https://www.amazon.it/s?k=caricatore+wireless&tag=giftminder-21", 
-        img: "https://images.unsplash.com/photo-1583091216954-469b8c0a2a19?auto=format&fit=crop&w=400&q=80" 
+        img: "src/components/img/Caricatore Wireless.jpeg" 
     },
     { 
         nome: "Agenda Moleskine", 
         link: "https://www.amazon.it/s?k=moleskine&tag=giftminder-21", 
-        img: "https://images.unsplash.com/photo-1517840806767-cc797304e792?auto=format&fit=crop&w=400&q=80" 
+        img: "src/components/img/Agenda Moleskine.jpeg" 
     },
     { 
         nome: "Penna Parker", 
         link: "https://www.amazon.it/s?k=penna+parker&tag=giftminder-21", 
-        img: "https://images.unsplash.com/photo-1594636797501-4f56at61550c?auto=format&fit=crop&w=400&q=80" 
+        img: "src/components/img/penna parker.jpg" 
     },
     { 
         nome: "Set Sommelier", 
         link: "https://www.amazon.it/s?k=set+vino&tag=giftminder-21", 
-        img: "https://images.unsplash.com/photo-1598460591147-36e2f1c834a3?auto=format&fit=crop&w=400&q=80" 
+        img: "src/components/img/Set Sommelier.jpeg" 
     },
     // --- Lista Aggiuntiva (10 Prodotti) ---
     { 
         nome: "Diffusore Aromi", 
         link: "https://www.amazon.it/s?k=diffusore+oli+essenziali&tag=giftminder-21", 
-        img: "https://images.unsplash.com/photo-1608571423902-eed4a5e84e43?auto=format&fit=crop&w=400&q=80" 
+        img: "src/components/img/Diffusore Aromi.jpeg" 
     },
     { 
         nome: "Lunch Box Termico", 
@@ -85,93 +85,124 @@ export const DB_SUGGERIMENTI = {
     { 
         nome: "Supporto Laptop", 
         link: "https://www.amazon.it/s?k=supporto+pc+portatile&tag=giftminder-21", 
-        img: "https://images.unsplash.com/photo-1616628188894-62a0a6ee551e?auto=format&fit=crop&w=400&q=80" 
+        img: "src/components/img/Supporto Laptop.jpeg" 
     },
     { 
         nome: "Candela Profumata", 
         link: "https://www.amazon.it/s?k=candela+profumata+regalo&tag=giftminder-21", 
-        img: "https://images.unsplash.com/photo-1602523961358-f9f03dd557db?auto=format&fit=crop&w=400&q=80" 
+        img: "src/components/img/Candela Profumata.jpeg" 
     },
     { 
         nome: "Trousse da Viaggio", 
         link: "https://www.amazon.it/s?k=beauty+case+viaggio&tag=giftminder-21", 
-        img: "https://images.unsplash.com/photo-1603571168541-1f92e22c91ac?auto=format&fit=crop&w=400&q=80" 
+        img: "src/components/img/Trousse da Viaggio.jpeg" 
     },
     { 
         nome: "Luce da Lettura", 
         link: "https://www.amazon.it/s?k=luce+lettura+clip&tag=giftminder-21", 
-        img: "https://images.unsplash.com/photo-1534431980846-979d39fa7334?auto=format&fit=crop&w=400&q=80" 
+        img: "src/components/img/Luce da Lettura.jpg" 
     },
     { 
         nome: "Kit Coltivazione", 
         link: "https://www.amazon.it/s?k=kit+bonsai+o+erbe&tag=giftminder-21", 
-        img: "https://images.unsplash.com/photo-1595180425712-421b8f8705f1?auto=format&fit=crop&w=400&q=80" 
+        img: "src/components/img/Kit Coltivazione.jpeg" 
     },
     { 
         nome: "Cuffie Wireless", 
         link: "https://www.amazon.it/s?k=cuffie+bluetooth+in+ear&tag=giftminder-21", 
-        img: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=400&q=80" 
+        img: "src/components/img/Cuffie Wireless.jpeg" 
     },
     { 
         nome: "Set Tagliere Formaggi", 
         link: "https://www.amazon.it/s?k=set+tagliere+formaggi&tag=giftminder-21", 
-        img: "https://images.unsplash.com/photo-1579844961858-a9686940f898?auto=format&fit=crop&w=400&q=80" 
+        img: "src/components/img/Set Tagliere Formaggi.jpeg" 
     },
     { 
         nome: "Localizzatore Chiavi", 
         link: "https://www.amazon.it/s?k=trova+chiavi+bluetooth&tag=giftminder-21", 
-        img: "https://images.unsplash.com/photo-1633122219543-a0a149c98686?auto=format&fit=crop&w=400&q=80" 
+        img: "src/components/img/Localizzatore Chiavi.jpeg" 
     }
     ],
     Compleanno: [
-        { nome: "Kindle", link: "https://www.amazon.it/s?k=kindle&tag=giftminder-21", img: "https://i.pinimg.com/736x/83/45/f2/8345f21b65d62ed178a0efbc7c9845a3.jpg" },
-        { nome: "Smartwatch", link: "https://www.amazon.it/s?k=smartwatch&tag=giftminder-21", img: "https://i.pinimg.com/736x/ef/bb/17/efbb17fc0cfc2be91f2c913c66676a5f.jpg" },
-        { nome: "Cuffie Noise Cancelling", link: "https://www.amazon.it/s?k=cuffie+anc&tag=giftminder-21", img: "https://i.pinimg.com/1200x/84/36/c4/8436c4db3f3371bbb925e2921c012854.jpg" },
-        { nome: "Set Cocktail", link: "https://www.amazon.it/s?k=set+barman&tag=giftminder-21", img: "https://i.pinimg.com/1200x/99/0c/a5/990ca50033d58c3d63b5bc7415d2ecbd.jpg" },
-        { nome: "LEGO Icons", link: "https://www.amazon.it/s?k=lego+adulti&tag=giftminder-21", img: "https://i.pinimg.com/736x/a5/97/81/a597819057ad0bbc9f5c991b0199ea83.jpg" },
-        { nome: "Fotocamera Istantanea", link: "https://www.amazon.it/s?k=instax+mini&tag=giftminder-21", img: "https://i.pinimg.com/1200x/cb/fe/b1/cbfeb16dd3d57c969928e1370101215a.jpg" },
-        { nome: "Massaggiatore Collo", link: "https://www.amazon.it/s?k=massaggiatore+collo&tag=giftminder-21", img: "https://i.pinimg.com/1200x/9a/28/f4/9a28f4cc5a28ff3643dbd8de032eae48.jpg" },
-        { nome: "Telescopio", link: "https://www.amazon.it/s?k=telescopio+astronomico&tag=giftminder-21", img: "https://i.pinimg.com/736x/60/67/bb/6067bb46edd4cb7f6cbca9d9cf0af7f3.jpg" },
-        { nome: "Giradischi Vintage", link: "https://www.amazon.it/s?k=giradischi&tag=giftminder-21", img: "" },
-        { nome: "Macchina Caffè", link: "https://www.amazon.it/s?k=macchina+caffe+espresso&tag=giftminder-21", img: "" },
-        { nome: "Drone con Telecamera", link: "https://www.amazon.it/s?k=drone&tag=giftminder-21", img: "" },
-        { nome: "Tablet", link: "https://www.amazon.it/s?k=tablet&tag=giftminder-21", img: "" }
+        { nome: "Kindle", link: "https://www.amazon.it/s?k=kindle&tag=giftminder-21", img: "src/components/img/kindle.jpg" },
+        { nome: "Smartwatch", link: "https://www.amazon.it/s?k=smartwatch&tag=giftminder-21", img: "src/components/img/smartwatch.jpeg" },
+        { nome: "Cuffie Noise Cancelling", link: "https://www.amazon.it/s?k=cuffie+anc&tag=giftminder-21", img: "src/components/img/Cuffie Noise Cancelling.jpeg" },
+        { nome: "Set Cocktail", link: "https://www.amazon.it/s?k=set+barman&tag=giftminder-21", img: "src/components/img/Set Cocktail.jpeg" },
+        { nome: "LEGO Icons", link: "https://www.amazon.it/s?k=lego+adulti&tag=giftminder-21", img: "https://i.pinimg.com/736x/a5/97/81/a597819057ad0bbc9f5c991b0199ea83.jpg" }, 
+        { nome: "Fotocamera Istantanea", link: "https://www.amazon.it/s?k=instax+mini&tag=giftminder-21", img: "src/components/img/instantcamera.jpeg" },
+        { nome: "Massaggiatore Collo", link: "https://www.amazon.it/s?k=massaggiatore+collo&tag=giftminder-21", img: "src/components/img/Massaggiatore Collo.jpeg" },
+        { nome: "Telescopio", link: "https://www.amazon.it/s?k=telescopio+astronomico&tag=giftminder-21", img: "https://i.pinimg.com/736x/60/67/bb/6067bb46edd4cb7f6cbca9d9cf0af7f3.jpg" }, 
+        { nome: "Giradischi Vintage", link: "https://www.amazon.it/s?k=giradischi&tag=giftminder-21", img: "src/components/img/Giradischi Vintage.jpg" },
+        { nome: "Macchina Caffè", link: "https://www.amazon.it/s?k=macchina+caffe+espresso&tag=giftminder-21", img: "src/components/img/Macchina Caffè.jpeg" },
+        { nome: "Drone con Telecamera", link: "https://www.amazon.it/s?k=drone&tag=giftminder-21", 
+        img: "src/components/img/Drone con Telecamera.jpeg" },
+        { nome: "Tablet", link: "https://www.amazon.it/s?k=tablet&tag=giftminder-21", 
+        img: "src/components/img/tablet.jpg" }
     ],
     Natale: [
-        { nome: "Cesto Gourmet", link: "https://www.amazon.it/s?k=cesto+natalizio&tag=giftminder-21", img: "" },
-        { nome: "Luci Smart", link: "https://www.amazon.it/s?k=philips+hue&tag=giftminder-21", img: "" },
-        { nome: "Maglione Natalizio", link: "https://www.amazon.it/s?k=maglione+natale&tag=giftminder-21", img: "" },
-        { nome: "Gioco da Tavolo", link: "https://www.amazon.it/s?k=giochi+da+tavolo&tag=giftminder-21", img: "" },
-        { nome: "Candela Yankee Candle", link: "https://www.amazon.it/s?k=yankee+candle&tag=giftminder-21", img: "" },
-        { nome: "Coperta Ponderata", link: "https://www.amazon.it/s?k=coperta+ponderata&tag=giftminder-21", img: "" },
-        { nome: "Set Degustazione Tè", link: "https://www.amazon.it/s?k=set+regalo+te&tag=giftminder-21", img: "" },
-        { nome: "Echo Dot", link: "https://www.amazon.it/s?k=echo+dot&tag=giftminder-21", img: "" },
-        { nome: "Calze Divertenti", link: "https://www.amazon.it/s?k=calze+pizza&tag=giftminder-21", img: "" },
-        { nome: "Pandoro Artigianale", link: "https://www.amazon.it/s?k=pandoro+artigianale&tag=giftminder-21", img: "" },
-        { nome: "Proiettore Stelle", link: "https://www.amazon.it/s?k=proiettore+galassia&tag=giftminder-21", img: "" },
-        { nome: "Set Bombe da Bagno", link: "https://www.amazon.it/s?k=bombe+da+bagno&tag=giftminder-21", img: "" }
+        { nome: "Cesto Gourmet", link: "https://www.amazon.it/s?k=cesto+natalizio&tag=giftminder-21", 
+        img: "src/components/img/cesto gourmet.jpg" },
+        { nome: "Luci Smart", link: "https://www.amazon.it/s?k=philips+hue&tag=giftminder-21", 
+        img: "src/components/img/luci-smart.jpg" },
+        { nome: "Maglione Natalizio", link: "https://www.amazon.it/s?k=maglione+natale&tag=giftminder-21", 
+        img: "src/components/img/maglione natalizio.jpeg" },
+        { nome: "Gioco da Tavolo", link: "https://www.amazon.it/s?k=giochi+da+tavolo&tag=giftminder-21", 
+        img: "src/components/img/set-giochi-tavolo.jpg" },
+        { nome: "Candela Yankee Candle", link: "https://www.amazon.it/s?k=yankee+candle&tag=giftminder-21", 
+        img: "src/components/img/yankeecandle.jpeg" },
+        { nome: "Coperta Ponderata", link: "https://www.amazon.it/s?k=coperta+ponderata&tag=giftminder-21", 
+        img: "src/components/img/copertaponderata.webp" },
+        { nome: "Set Degustazione Tè", link: "https://www.amazon.it/s?k=set+regalo+te&tag=giftminder-21", 
+        img: "src/components/img/setthe.jpeg" },
+        { nome: "Echo Dot", link: "https://www.amazon.it/s?k=echo+dot&tag=giftminder-21", 
+        img: "src/components/img/Echo Dot.jpeg" },
+        { nome: "Calze Divertenti", link: "https://www.amazon.it/s?k=calze+pizza&tag=giftminder-21", 
+        img: "src/components/img/Calze Divertenti.jpeg" },
+        { nome: "Pandoro Artigianale", link: "https://www.amazon.it/s?k=pandoro+artigianale&tag=giftminder-21", 
+        img: "src/components/img/pandoro_artigianale_serge_pandorodett_1_1000x.webp" },
+        { nome: "Proiettore Stelle", link: "https://www.amazon.it/s?k=proiettore+galassia&tag=giftminder-21", 
+        img: "src/components/img/proiettorestelle.webp" },
+        { nome: "Set Bombe da Bagno", link: "https://www.amazon.it/s?k=bombe+da+bagno&tag=giftminder-21", 
+        img: "src/components/img/setbombe.jpg" }
     ],
     Anniversario: [
-        { nome: "Smartbox Coppia", link: "https://www.amazon.it/s?k=smartbox+coppia&tag=giftminder-21", img: "" },
-        { nome: "Mappa Stellare", link: "https://www.amazon.it/s?k=mappa+stellare&tag=giftminder-21", img: "" },
-        { nome: "Cornice Digitale", link: "https://www.amazon.it/s?k=cornice+digitale&tag=giftminder-21", img: "" },
-        { nome: "Set Spa Luxury", link: "https://www.amazon.it/s?k=set+spa+regalo&tag=giftminder-21", img: "" },
-        { nome: "Proiettore Portatile", link: "https://www.amazon.it/s?k=mini+proiettore&tag=giftminder-21", img: "" },
-        { nome: "Calici Vino Incisi", link: "https://www.amazon.it/s?k=calice+vino+inciso&tag=giftminder-21", img: "" },
-        { nome: "Cena a Lume di Candela", link: "https://www.amazon.it/s?k=kit+cena+romantica&tag=giftminder-21", img: "" },
-        { nome: "Weekend Fuori Porta", link: "https://www.amazon.it/s?k=cofanetto+viaggio&tag=giftminder-21", img: "" }
+        { nome: "Smartbox Coppia", link: "https://www.amazon.it/s?k=smartbox+coppia&tag=giftminder-21", 
+        img: "src/components/img/Smartbox Coppia.jpeg" },
+        { nome: "Mappa Stellare", link: "https://www.amazon.it/s?k=mappa+stellare&tag=giftminder-21", 
+        img: "src/components/img/Mappa Stellare.jpeg" },
+        { nome: "Cornice Digitale", link: "https://www.amazon.it/s?k=cornice+digitale&tag=giftminder-21", 
+        img: "src/components/img/cornice digitale.jpg" },
+        { nome: "Set Spa Luxury", link: "https://www.amazon.it/s?k=set+spa+regalo&tag=giftminder-21", 
+        img: "src/components/img/Set Spa Luxury.jpg" },
+        { nome: "Proiettore Portatile", link: "https://www.amazon.it/s?k=mini+proiettore&tag=giftminder-21", 
+        img: "src/components/img/proiettore portatile.jpeg" },
+        { nome: "Calici Vino Incisi", link: "https://www.amazon.it/s?k=calice+vino+inciso&tag=giftminder-21", 
+        img: "src/components/img/Calici Vino Incisi.webp" },
+        { nome: "Cena a Lume di Candela", link: "https://www.amazon.it/s?k=kit+cena+romantica&tag=giftminder-21", 
+        img: "src/components/img/Cena a Lume di Candela.jpeg" },
+        { nome: "Weekend Fuori Porta", link: "https://www.amazon.it/s?k=cofanetto+viaggio&tag=giftminder-21", 
+        img: "src/components/img/Weekend Fuori Porta.jpeg" }
     ],
     "San Valentino": [
-        { nome: "Cioccolatini Luxury", link: "https://www.amazon.it/s?k=cioccolatini+regalo&tag=giftminder-21", img: "" },
-        { nome: "Album Foto", link: "https://www.amazon.it/s?k=album+foto+coppia&tag=giftminder-21", img: "" },
-        { nome: "Orso di Rose", link: "https://www.amazon.it/s?k=orso+rose&tag=giftminder-21", img: "" },
-        { nome: "Gioiello Personalizzato", link: "https://www.amazon.it/s?k=collana+nome&tag=giftminder-21", img: "" },
-        { nome: "Cuscino Cuore", link: "https://www.amazon.it/s?k=cuscino+cuore&tag=giftminder-21", img: "" },
-        { nome: "Chiave del Cuore", link: "https://www.amazon.it/s?k=portachiavi+coppia&tag=giftminder-21", img: "" }
+        { nome: "Cioccolatini Luxury", link: "https://www.amazon.it/s?k=cioccolatini+regalo&tag=giftminder-21", 
+        img: "src/components/img/Cioccolatini Luxury.jpeg" },
+        { nome: "Album Foto", link: "https://www.amazon.it/s?k=album+foto+coppia&tag=giftminder-21", 
+        img: "https://images.unsplash.com/photo-1542036254-07d4b4a1f0a2?auto=format&fit=crop&w=400&q=80" }, 
+        { nome: "Orso di Rose", link: "https://www.amazon.it/s?k=orso+rose&tag=giftminder-21", 
+        img: "src/components/img/Orso di Rose.jpeg" },
+        { nome: "Gioiello Personalizzato", link: "https://www.amazon.it/s?k=collana+nome&tag=giftminder-21", 
+        img: "src/components/img/Gioiello Personalizzato.jpg" },
+        { nome: "Cuscino Cuore", link: "https://www.amazon.it/s?k=cuscino+cuore&tag=giftminder-21", 
+        img: "src/components/img/Cuscino Cuore.jpeg" },
+        { nome: "Chiave del Cuore", link: "https://www.amazon.it/s?k=portachiavi+coppia&tag=giftminder-21", 
+        img: "src/components/img/Chiave del Cuore.jpeg" }
     ],
     Laurea: [
-        { nome: "Penna Stilografica", link: "https://www.amazon.it/s?k=penna+stilografica&tag=giftminder-21", img: "" },
-        { nome: "Borsa Ventiquattrore", link: "https://www.amazon.it/s?k=borsa+lavoro+pelle&tag=giftminder-21", img: "" },
-        { nome: "Smartwatch Elegante", link: "https://www.amazon.it/s?k=smartwatch+elegante&tag=giftminder-21", img: "" }
+        { nome: "Penna Stilografica", link: "https://www.amazon.it/s?k=penna+stilografica&tag=giftminder-21", 
+        img: "src/components/img/Penna Stilografica.jpeg" }, 
+        { nome: "Borsa Ventiquattrore", link: "https://www.amazon.it/s?k=borsa+lavoro+pelle&tag=giftminder-21", 
+        img: "src/components/img/Borsa Ventiquattrore.jpeg" }, 
+        { nome: "Smartwatch Elegante", link: "https://www.amazon.it/s?k=smartwatch+elegante&tag=giftminder-21", 
+        img: "src/components/img/Smartwatch Elegante.jpeg" } 
     ]
 };

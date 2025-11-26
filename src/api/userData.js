@@ -56,3 +56,17 @@ export const uploadAvatar = async (userId, file) => {
         throw error;
     }
 };
+
+export const uploadGiftImage = async (userId, file) => {
+    try {
+        const fileName = `${userId}-${Date.now()}-${file.name}`;
+        const { error: uploadError } = await supabase.storage.from('gift-images').upload(fileName, file);
+        if (uploadError) throw uploadError;
+
+        const { data } = supabase.storage.from('gift-images').getPublicUrl(fileName);
+        return data.publicUrl;
+    } catch (error) {
+        console.error("Errore caricamento immagine regalo:", error);
+        throw error;
+    }
+};
