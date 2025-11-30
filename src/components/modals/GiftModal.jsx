@@ -58,8 +58,8 @@ export const GiftModal = (props) => {
                         <button onClick={props.onClose}><X /></button>
                     </div>
                     <div className="p-6 space-y-4 flex-1 overflow-y-auto">
-                        {props.editingGiftIndex === null && (
-                            <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-2 gap-4">
+                            {props.editingGiftIndex === null && (
                                 <div>
                                     <label className="block text-sm font-bold mb-1">Persona</label>
                                     <select
@@ -68,21 +68,22 @@ export const GiftModal = (props) => {
                                         onChange={e => handlePersonChange(e.target.value)}
                                     >
                                         <option value="" disabled>Seleziona una persona</option>
-                                        {props.persone.map(p => <option key={p.id} value={p.id}>{p.nome}</option>)}
+                                        {props.persone.filter(p => p.eventi && p.eventi.some(e => !e.archived)).map(p => <option key={p.id} value={p.id}>{p.nome}</option>)}
                                     </select>
                                 </div>
-                                <div>
-                                    <label className="block text-sm font-bold mb-1">Occasione</label>
-                                    <div className="flex gap-2">
-                                        <select className="w-full border border-gray-200 rounded-lg p-3" value={props.giftTargetEvent} onChange={e => { props.setGiftTargetEvent(e.target.value); props.updateSuggestions(e.target.value); }} disabled={!props.activePerson}>
-                                            {props.activePerson && props.activePerson.eventi && [...new Set(props.activePerson.eventi.filter(e => !e.archived).map(e => e.tipo))].map(tipo => <option key={tipo} value={tipo}>{tipo}</option>)}
-                                            {(!props.activePerson || !props.activePerson.eventi || props.activePerson.eventi.filter(e => !e.archived).length === 0) && <option value="" disabled>Nessun evento</option>}
-                                        </select>
-                                        <button onClick={() => props.setShowAddEventModal(true)} className="bg-gray-100 px-3 rounded-lg font-bold" disabled={!props.activePerson}>+</button>
-                                    </div>
+                            )}
+                            <div className={props.editingGiftIndex !== null ? "col-span-2" : ""}>
+                                <label className="block text-sm font-bold mb-1">Occasione</label>
+                                <div className="flex gap-2">
+                                    <select className="w-full border border-gray-200 rounded-lg p-3" value={props.giftTargetEvent} onChange={e => { props.setGiftTargetEvent(e.target.value); props.updateSuggestions(e.target.value); }} disabled={!props.activePerson}>
+                                        {props.activePerson && props.activePerson.eventi && [...new Set(props.activePerson.eventi.filter(e => !e.archived).map(e => e.tipo))].map(tipo => <option key={tipo} value={tipo}>{tipo}</option>)}
+                                        {props.pendingNewEventData && <option key={props.pendingNewEventData.tipo} value={props.pendingNewEventData.tipo}>{props.pendingNewEventData.tipo}</option>}
+                                        {(!props.activePerson || !props.activePerson.eventi || (props.activePerson.eventi.filter(e => !e.archived).length === 0 && !props.pendingNewEventData)) && <option value="" disabled>Nessun evento</option>}
+                                    </select>
+                                    <button onClick={() => { props.setIsAddingEventFromGiftModal(true); props.setShowAddEventModal(true); }} className="bg-gray-100 px-3 rounded-lg font-bold" disabled={!props.activePerson}>+</button>
                                 </div>
                             </div>
-                        )}
+                        </div>
                         {props.editingGiftIndex === null && (
                             <div className="bg-amber-50 border border-amber-100 rounded-lg p-3">
                                 <div className="flex justify-between items-center mb-2">

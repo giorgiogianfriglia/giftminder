@@ -2,7 +2,7 @@ import React from 'react';
 import { AlertTriangle } from 'lucide-react';
 
 export const ConfirmModal = ({ config, onCancel, onConfirm }) => (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] flex items-center justify-center p-4 fade-in">
+    <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-[90]">
         <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 text-center border border-gray-200">
             <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4 text-red-600">
                 <AlertTriangle size={24} />

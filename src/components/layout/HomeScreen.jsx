@@ -10,10 +10,8 @@ const HomeScreen = ({
     openNewPersonModal,
     openNewGiftModal,
     handleSidebarClick,
-    themeStyles,
     handleRefreshAmazonSuggestions,
     selectedUid,
-    currentTheme,
     setShowPeopleList
 }) => {
     const soonestDay = sidebarList.length > 0 ? Math.min(...sidebarList.map(p => p.nextEvent.days)) : null;
@@ -38,8 +36,7 @@ const HomeScreen = ({
                 <p className="text-gray-600 mb-8">Sembra che tu non abbia ancora aggiunto nessuno. Inizia creando una scheda persona.</p>
                 <button
                     onClick={openNewPersonModal}
-                    style={themeStyles.primary}
-                    className="px-6 py-3 rounded-lg font-bold shadow-md flex items-center gap-2 hover:opacity-90 transition"
+                    className="px-6 py-3 rounded-lg font-bold shadow-md flex items-center gap-2 hover:opacity-90 transition bg-indigo-600 text-white"
                 >
                     <Plus size={18} />
                     <span>Crea la tua prima scheda</span>
@@ -48,20 +45,16 @@ const HomeScreen = ({
         );
     } 
 
-    const nextEvent = {
-        ...soonestPeople[0], // Use the first person for initial display
-        lastGift: getLastGift(soonestPeople[0].id, soonestPeople[0].nextEvent.tipo),
-    };
+    const nextEvent = soonestPeople.length > 0 ? {
+        ...soonestPeople[currentSlide], // Use the current slide person for initial display
+        lastGift: getLastGift(soonestPeople[currentSlide].id, soonestPeople[currentSlide].nextEvent.tipo),
+    } : null;
     
-    // Only display upcoming events that are not in the soonestPeople group
     const upcomingEvents = sidebarList.filter(p => p.nextEvent.days !== soonestDay).slice(0, 3);
 
-
     return (
-        <div className="p-6 bg-slate-50 h-full overflow-y-auto flex-1">
+        <div className="p-6 bg-slate-50 h-full overflow-y-auto flex-1 custom-scroll">
             <div className="max-w-4xl mx-auto">
-                {/* <h1 className="text-3xl font-bold mb-6">Home</h1> */}
-
                 <div className="grid grid-cols-1 lg:grid-cols-[140px_1fr] gap-6 mb-6">
                     {/* Left Column: Action Buttons */}
                     <div className="grid grid-cols-3 lg:grid-cols-1 gap-4">
@@ -80,71 +73,97 @@ const HomeScreen = ({
                     </div>
 
                     {/* Right Column: In Scadenza & Prossimi Eventi */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-[3fr_2fr] gap-6 min-h-[230px]">
                         {/* Left: Next Event Details - In Scadenza */}
-                        <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
-                            <h2 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">
-                                In Scadenza {displayCount > 1 && `(${displayCount})`}
-                            </h2>
-                            <div className="flex items-start sm:items-center gap-6">
-                                <div className={`text-center flex-shrink-0 w-24 cursor-pointer`} onClick={() => handleSidebarClick(nextEvent)}>
-                                    <div className="text-5xl font-bold" style={{ color: nextEvent.nextEvent.days < 14 ? '#E53E3E' : '#38A169' }}>
-                                        {nextEvent.nextEvent.days}
-                                    </div>
-                                    <div className="text-sm font-bold text-gray-500">Giorni</div>
-                                </div>
-                                <div className="w-px bg-gray-200 self-stretch hidden sm:block"></div>
-                                <div className="flex-grow cursor-pointer" onClick={() => handleSidebarClick(soonestPeople[currentSlide])}>
-                                    {displayCount > 1 ? (
-                                        <>
-                                            <div className="relative h-6 overflow-hidden">
-                                                {soonestPeople.map((person, index) => (
-                                                    <p
-                                                        key={person.id}
-                                                        className={`absolute w-full text-xl font-bold transition-all duration-500 ease-in-out
-                                                            ${index === currentSlide ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'}`}
-                                                        style={{ left: `${(index - currentSlide) * 100}%` }}
-                                                    >
-                                                        {person.nome}
-                                                    </p>
-                                                ))}
+                        {soonestPeople.length > 0 && (
+                            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 h-[230px]">
+                                <h2 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">
+                                    In Scadenza {displayCount > 1 && `(${displayCount})`}
+                                </h2>
+                                <div className="flex items-start sm:items-start gap-6">
+                                    <div className="flex flex-col items-center flex-shrink-0 w-24">
+                                        <div className="flex flex-row items-center justify-center gap-2 mb-4">
+                                            {nextEvent.foto ? (
+                                                <img
+                                                    src={nextEvent.foto}
+                                                    alt={nextEvent.nome}
+                                                    className="w-14 h-14 rounded-full object-cover border-2 border-indigo-600 scale-110"
+                                                />
+                                            ) : (
+                                                <div className="w-14 h-14 rounded-full bg-gray-200 flex items-center justify-center border-2 border-indigo-600 scale-110">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-gray-400" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" /></svg>
+                                                </div>
+                                            )}
+                                        </div>
+                                        <div className="text-center" onClick={() => handleSidebarClick(nextEvent)}>
+                                            <div className={`${nextEvent.nextEvent.days === 0 ? 'text-3xl' : 'text-5xl'} font-bold`} style={{ color: nextEvent.nextEvent.days < 14 ? '#E53E3E' : '#38A169' }}>
+                                                {nextEvent.nextEvent.days === 0 ? 'OGGI!' : nextEvent.nextEvent.days}
                                             </div>
-                                            <p className="text-sm text-gray-500 mb-2">{soonestPeople[currentSlide].relazione}</p>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <p className="text-xl font-bold">{nextEvent.nome}</p>
-                                            <p className="text-sm text-gray-500 mb-2">{nextEvent.relazione}</p>
-                                        </>
-                                    )}
-                                    {displayCount > 1 && (
-                                        <div className="flex justify-center gap-2 mt-2">
-                                            {soonestPeople.map((_, idx) => (
-                                                <span
-                                                    key={idx}
-                                                    className={`block w-2 h-2 rounded-full cursor-pointer transition-colors
-                                                        ${idx === currentSlide ? 'bg-indigo-600' : 'bg-gray-300 hover:bg-gray-400'}`}
-                                                    onClick={(e) => { e.stopPropagation(); setCurrentSlide(idx); handleSidebarClick(soonestPeople[idx]); }}
-                                                ></span>
-                                            ))}
+                                            {nextEvent.nextEvent.days !== 0 && (
+                                                <div className="text-sm font-bold text-gray-500">Giorni</div>
+                                            )}
                                         </div>
-                                    )}
-                                    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
-                                        <span className="flex items-center gap-1.5 bg-indigo-100 text-indigo-600 font-bold px-3 py-1 rounded-full">
-                                            <Calendar size={14} />
-                                            {nextEvent.nextEvent.tipo}
-                                        </span>
-                                        {nextEvent.occorrenza && <span className="font-medium text-gray-600">{nextEvent.occorrenza}</span>}
                                     </div>
-                                    {nextEvent.lastGift && (
-                                        <div className="mt-4 pt-4 border-t">
-                                            <p className="text-xs text-gray-400 font-semibold">Ultimo regalo ({nextEvent.lastGift.anno}):</p>
-                                            <p className="font-semibold text-gray-700">{nextEvent.lastGift.oggetto}</p>
+                                    <div className="w-px bg-gray-200 self-stretch hidden sm:block"></div>
+                                    <div className="flex-grow cursor-pointer" onClick={() => handleSidebarClick(soonestPeople[currentSlide])}>
+                                        <div className="mb-4">
+                                            {displayCount > 1 ? (
+                                                <>
+                                                    <div className="relative h-7 overflow-hidden leading-tight mb-1">
+                                                        {soonestPeople.map((person, index) => (
+                                                            <p
+                                                                key={person.id}
+                                                                className={`absolute w-full text-xl font-bold transition-all duration-500 ease-in-out
+                                                                    ${index === currentSlide ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'}`}
+                                                                style={{ left: `${(index - currentSlide) * 100}%` }}
+                                                            >
+                                                                {person.nome}
+                                                            </p>
+                                                        ))}
+                                                    </div>
+                                                    <p className="text-sm text-gray-500 mb-0">{soonestPeople[currentSlide].relazione}</p>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <p className="text-xl font-bold leading-tight mb-1">{nextEvent.nome}</p>
+                                                    <p className="text-sm text-gray-500 mb-0">{nextEvent.relazione}</p>
+                                                </>
+                                            )}
+                                            {displayCount > 1 && (
+                                                <div className="flex justify-center gap-2 mt-2">
+                                                    {soonestPeople.map((_, idx) => (
+                                                        <span
+                                                            key={idx}
+                                                            className={`block w-2 h-2 rounded-full cursor-pointer transition-colors
+                                                                ${idx === currentSlide ? 'bg-indigo-600' : 'bg-gray-300 hover:bg-gray-400'}`}
+                                                            onClick={(e) => { e.stopPropagation(); setCurrentSlide(idx); handleSidebarClick(soonestPeople[idx]); }}
+                                                        ></span>
+                                                    ))}
+                                                </div>
+                                            )}
                                         </div>
-                                    )}
+                                        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm mt-2">
+                                            <span className="flex items-center gap-1.5 bg-indigo-100 text-indigo-600 font-bold px-3 py-1 rounded-full">
+                                                <Calendar size={14} />
+                                                {nextEvent.nextEvent.tipo}
+                                            </span>
+                                            {nextEvent.lastGift && nextEvent.occorrenza && <span className="font-medium text-gray-600">{nextEvent.occorrenza}</span>}
+                                        </div>
+                                        {nextEvent.lastGift ? (
+                                            <div className="mt-4 pt-4 border-t">
+                                                <p className="text-xs text-gray-400 font-semibold">Ultimo regalo ({nextEvent.lastGift.anno}):</p>
+                                                <p className="font-semibold text-gray-700">{nextEvent.lastGift.oggetto}</p>
+                                            </div>
+                                        ) : (
+                                            <div className="mt-4 pt-4 border-t">
+                                                <p className="font-semibold text-sm mb-1">Nessun regalo per l'occasione.</p>
+                                                <p className="text-xs text-gray-400 font-semibold">Fatti ispirare dai consigli qui sotto!</p>
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        )}
 
                         {/* Right: Upcoming Events - Prossimi Eventi */}
                         <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
@@ -168,10 +187,7 @@ const HomeScreen = ({
                     </div>
                 </div>
 
-                {/* AdSense Banner Placeholder */}
                 <div className="my-6 text-center">
-                    {/* Replace data-ad-client and data-ad-slot with your actual AdSense IDs */}
-                    {/* Example ad unit - dimensions and type might need adjustment */}
                     <ins className="adsbygoogle"
                          style={{ display: 'block' }}
                          data-ad-client="ca-pub-YOUR_ADSENSE_CLIENT_ID"
@@ -181,7 +197,6 @@ const HomeScreen = ({
                     <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
                 </div>
 
-                {/* Amazon Section */}
                 {amazonSuggestions && amazonSuggestions.length > 0 && (
                     <div className="p-6 rounded-2xl shadow-sm border border-gray-200" style={{ backgroundColor: '#FE6100' }}>
                         <div className="flex justify-between items-center mb-4">

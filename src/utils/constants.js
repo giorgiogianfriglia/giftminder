@@ -1,13 +1,6 @@
-export const RELAZIONI_DEFAULT = ["Amico/a", "Moglie", "Marito", "Fidanzato/a", "Papà", "Mamma", "Figlio/a", "Fratello", "Sorella", "Collega"];
+export const RELAZIONI_DEFAULT = ["Amico/a", "Moglie", "Marito", "Fidanzato/a", "Papà", "Mamma", "Figlio/a", "Fratello", "Sorella", "Nipote", "Collega", "Cognato/a"];
 export const EVENT_TYPES_DEFAULT = ["Compleanno", "Natale", "Anniversario", "San Valentino", "Onomastico", "Laurea", "Epifania", "Festa del Papà"];
 
-export const THEMES = {
-    default: { id: 'default', name: 'Classico', primary: '#4f46e5', secondary: '#f59e0b', accent: '#e0e7ff', textAccent: '#3730a3' },
-    logo: { id: 'logo', name: 'Corallo', primary: '#FF7F50', secondary: '#25A79B', accent: '#FEF2F2', textAccent: '#991B1B' },
-    ocean: { id: 'ocean', name: 'Oceano', primary: '#0284c7', secondary: '#06b6d4', accent: '#e0f2fe', textAccent: '#075985' },
-    forest: { id: 'forest', name: 'Foresta', primary: '#059669', secondary: '#84cc16', accent: '#d1fae5', textAccent: '#064e3b' },
-    autumn: { id: 'autumn', name: 'Autunno', primary: '#D97706', secondary: '#F59E0B', accent: '#FEF3C7', textAccent: '#92400E' }
-};
 
 export const DB_SUGGERIMENTI = {
     generici: [

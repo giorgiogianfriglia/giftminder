@@ -26,7 +26,7 @@ export const PersonModal = ({
     persone,
     editingEvents,
     handleEditEventChange,
-    handleDeleteEventFromEdit,
+    handleDeleteEventFromModal,
     handleAddFixedEvents,
     newEventType,
     setNewEventType,
@@ -177,39 +177,34 @@ export const PersonModal = ({
                                 <div className="pt-4 border-t">
                                     <div className="flex justify-between items-center">
                                         <h4 className="font-bold mb-2">Eventi</h4>
-                                        <button type="button" onClick={handleAddFixedEvents} className="text-sm font-medium text-blue-600 hover:text-blue-800 px-2 py-1 rounded-md hover:bg-blue-50">
-                                            + Aggiungi eventi fissi
-                                        </button>
                                     </div>
                                     {editingEvents.map((evt, idx) => {
-                                        const isFixed = evt.is_fixed;
+                                        const isFixed = fixedEvents.some(fe => fe.type === evt.tipo);
                                         return (
-                                            <div key={idx} className="flex gap-2 items-end p-2 rounded-lg bg-gray-50 mb-2">
-                                                <input 
-                                                    value={evt.tipo} 
-                                                    readOnly={isFixed}
-                                                    onChange={(e) => handleEditEventChange(idx, 'tipo', e.target.value)} 
-                                                    className={`w-full border border-gray-200 p-2 rounded-lg ${isFixed ? 'bg-gray-200 cursor-not-allowed' : ''}`}
-                                                />
-                                                {isFixed ? (
-                                                    <div className="w-full border border-gray-200 p-2 rounded-lg bg-gray-200 text-gray-600">
-                                                        {formatFixedDate(evt.data)}
-                                                    </div>
-                                                ) : (
-                                                    <input 
-                                                        type="date" 
-                                                        value={evt.data} 
-                                                        onChange={(e) => handleEditEventChange(idx, 'data', e.target.value)} 
-                                                        className="w-full border border-gray-200 p-2 rounded-lg" 
-                                                    />
-                                                )}
+                                            <div key={idx} className="flex gap-2 items-center p-2 rounded-lg bg-gray-50 mb-2">
+                                                <div className="flex-1 font-semibold border border-gray-200 p-2 rounded-lg bg-gray-100 text-gray-700 text-center">
+                                                    {evt.tipo}
+                                                </div>
+                                                <div className="flex-1">
+                                                    {isFixed ? (
+                                                        <div className="w-full text-center border border-gray-200 p-2 rounded-lg bg-gray-200 text-gray-600">
+                                                            {formatFixedDate(evt.data)}
+                                                        </div>
+                                                    ) : (
+                                                        <input 
+                                                            type="date" 
+                                                            value={evt.data} 
+                                                            onChange={(e) => handleEditEventChange(idx, 'data', e.target.value)} 
+                                                            className="w-full border border-gray-200 p-2 rounded-lg" 
+                                                        />
+                                                    )}
+                                                </div>
                                                 <button 
                                                     type="button" 
-                                                    onClick={() => handleDeleteEventFromEdit(idx)} 
-                                                    className={`p-2 ${isFixed ? 'text-gray-300 cursor-not-allowed' : 'text-red-500 hover:bg-red-100 rounded-full'}`}
-                                                    disabled={isFixed}
+                                                    onClick={() => handleDeleteEventFromModal(idx)} 
+                                                    className="p-2 text-red-500 hover:bg-red-100 rounded-lg"
                                                 >
-                                                    <X size={16} />
+                                                    <Trash2 size={16} />
                                                 </button>
                                             </div>
                                         );

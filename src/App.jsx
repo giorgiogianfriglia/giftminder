@@ -13,7 +13,7 @@ import {
     ArchiveModal,
     StatsModal,
 } from './components/modals/Modals';
-import { calcolaOccorrenza } from './utils/helpers';
+import { calcolaOccorrenza, formatFixedDate } from './utils/helpers';
 
 export default function App() {
     const giftMinder = useGiftMinder();
@@ -38,15 +38,13 @@ export default function App() {
                 <Sidebar {...giftMinder} />
             </div>
             <div className="flex-grow contents order-1 md:order-2">
-                <MainContent {...giftMinder} calcolaOccorrenza={calcolaOccorrenza} />
+                <MainContent {...giftMinder} calcolaOccorrenza={calcolaOccorrenza} formatFixedDate={formatFixedDate} />
             </div>
 
             {giftMinder.showSettings && (
                 <SettingsModal
-                    currentTheme={giftMinder.currentTheme}
-                    setCurrentTheme={giftMinder.setCurrentTheme}
+                    {...giftMinder}
                     onClose={() => giftMinder.setShowSettings(false)}
-                    handleLogout={giftMinder.handleLogout}
                 />
             )}
 
@@ -59,7 +57,10 @@ export default function App() {
 
             {giftMinder.showModalGift && (
                 <GiftModal
-                    onClose={() => giftMinder.setShowModalGift(false)}
+                    onClose={() => {
+                        giftMinder.setShowModalGift(false);
+                        giftMinder.setPendingNewEventData(null);
+                    }}
                     {...giftMinder}
                 />
             )}
@@ -67,6 +68,9 @@ export default function App() {
             {giftMinder.showAddEventModal && (
                 <AddEventModal
                     onClose={() => giftMinder.setShowAddEventModal(false)}
+                    isAddingEventFromGiftModal={giftMinder.isAddingEventFromGiftModal}
+                    setIsAddingEventFromGiftModal={giftMinder.setIsAddingEventFromGiftModal}
+                    setPendingNewEventData={giftMinder.setPendingNewEventData}
                     {...giftMinder}
                 />
             )}

@@ -3,7 +3,7 @@ import { Check } from 'lucide-react';
 import { fixedEvents } from '../../utils/fixedEvents';
 import { formatFixedDate } from '../../utils/helpers';
 
-export const AddEventModal = ({ onClose, handleAddEventToPerson, addEventName, setAddEventName, eventTypesList, customAddEventName, setCustomAddEventName, saveCustomAddEventName, addEventDate, setAddEventDate, themeStyles }) => {
+export const AddEventModal = ({ onClose, handleAddEventToPerson, addEventName, setAddEventName, eventTypesList, customAddEventName, setCustomAddEventName, saveCustomAddEventName, addEventDate, setAddEventDate, themeStyles, isAddingEventFromGiftModal, setIsAddingEventFromGiftModal, activePerson }) => {
     const [isFixed, setIsFixed] = useState(false);
 
     useEffect(() => {
@@ -16,6 +16,11 @@ export const AddEventModal = ({ onClose, handleAddEventToPerson, addEventName, s
             setAddEventDate('');
         }
     }, [addEventName, setAddEventDate]);
+
+    const handleAddClick = () => {
+        handleAddEventToPerson(); // handleAddEventToPerson now handles all logic
+        onClose(); // Close the modal after adding the event
+    };
 
     return (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
@@ -41,7 +46,7 @@ export const AddEventModal = ({ onClose, handleAddEventToPerson, addEventName, s
                     ) : (
                         <input type="date" className="w-full border border-gray-200 rounded-lg p-2" value={addEventDate} onChange={e => setAddEventDate(e.target.value)} />
                     )}
-                    <button onClick={handleAddEventToPerson} style={themeStyles.primary} className="w-full font-bold py-2 rounded-lg">Aggiungi</button>
+                    <button onClick={handleAddClick} style={themeStyles.primary} className="w-full font-bold py-2 rounded-lg">Aggiungi</button>
                     <button onClick={onClose} className="w-full text-gray-500 py-2">Annulla</button>
                 </div>
             </div>

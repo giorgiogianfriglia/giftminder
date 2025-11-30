@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Gift, Calendar, Plus, Trash, Pencil, Lightbulb, RefreshCw, Search, Calculator, Link as LinkIcon, ExternalLink, ShoppingBag, Euro, Clock, Users, Camera } from 'lucide-react';
+import { Gift, Calendar, Plus, Trash, Pencil, Lightbulb, RefreshCw, Search, Calculator, Link as LinkIcon, ExternalLink, ShoppingBag, Euro, Clock, Users, Camera, X } from 'lucide-react';
 import { AdUnit, GiftImage } from '../ui/Shared';
 import HomeScreen from './HomeScreen';
 import { truncateText } from '../../utils/helpers';
@@ -26,7 +26,9 @@ const MainContent = (props) => {
         getFilteredGifts,
         calcolaOccorrenza,
         openEditGiftModal,
-        handleDeleteSingleGift
+        handleDeleteSingleGift,
+        formatFixedDate,
+        handleDeleteEventFromTab
     } = props;
 
     const [showParticipantsTooltip, setShowParticipantsTooltip] = useState(false);
@@ -38,7 +40,7 @@ const MainContent = (props) => {
     }
 
     return (
-        <main className="flex-1 bg-slate-50 h-2/3 md:h-full overflow-y-scroll p-6 relative">
+        <main className="flex-1 bg-slate-50 h-2/3 md:h-full overflow-y-scroll p-6 relative custom-scroll">
             {showParticipantsTooltip && (
                 <div
                     className="fixed bg-gray-800 text-white text-sm p-3 rounded-lg shadow-lg z-50 max-w-xs"
@@ -75,9 +77,15 @@ const MainContent = (props) => {
                                     {activePerson.relazione}
                                 </span>
                             </div>
-                            <p className="text-gray-500 flex items-center gap-2 mt-1">
-                                <Calendar size={16} /> {headerInfo.date ? new Date(headerInfo.date).toLocaleDateString() : "--"} ({headerInfo.type})
-                            </p>
+                            <div className="text-gray-500 mt-1 md:flex md:items-baseline md:gap-2">
+                                <div className="flex items-center gap-2">
+                                    <Calendar size={16} />
+                                    {headerInfo.date ? (headerInfo.isFixed ? formatFixedDate(headerInfo.date) : new Date(headerInfo.date).toLocaleDateString()) : "--"}
+                                </div>
+                                <div>
+                                    ({headerInfo.type})
+                                </div>
+                            </div>
                             <div className="min-h-[2.5rem]">
                                 {headerInfo.partnerUid && (
                                     <button onClick={() => handleSelectUid(headerInfo.partnerUid, headerInfo.partnerType)} className="flex items-center gap-1 text-sm hover:underline font-medium" style={{ color: currentTheme.secondary }}>
@@ -153,14 +161,28 @@ const MainContent = (props) => {
 
                 <AdUnit />
 
-                <div className="flex items-center gap-2 mb-4 overflow-x-auto pb-2 no-scrollbar">
+                <div className="flex items-center gap-2 mb-4 pt-2 overflow-x-auto pb-2 no-scrollbar">
                     <button onClick={() => handleTabChange("Tutti")} className={`px-4 py-2 rounded-full text-sm font-bold whitespace-nowrap transition ${activeTab === "Tutti" ? 'text-white' : 'bg-gray-100 text-gray-600'}`} style={activeTab === "Tutti" ? { backgroundColor: currentTheme.primary } : {}}>
                         Tutti
                     </button>
-                    {activePerson.eventi.filter(e => !e.archived).map(e => (
-                        <button key={e.tipo} onClick={() => handleTabChange(e.tipo)} className={`px-4 py-2 rounded-full text-sm font-bold whitespace-nowrap transition ${activeTab === e.tipo ? 'text-white' : 'bg-gray-100 text-gray-600'}`} style={activeTab === e.tipo ? { backgroundColor: currentTheme.primary } : {}}>
-                            {e.tipo}
-                        </button>
+                    {activePerson.eventi.filter(e => !e.archived).map((e, eIdx) => (
+                        <div key={e.tipo} className="relative group">
+                            <button onClick={() => handleTabChange(e.tipo)} className={`px-4 py-2 rounded-full text-sm font-bold whitespace-nowrap transition ${activeTab === e.tipo ? 'text-white' : 'bg-gray-100 text-gray-600'}`} style={activeTab === e.tipo ? { backgroundColor: currentTheme.primary } : {}}>
+                                {e.tipo}
+                            </button>
+                            {!e.is_fixed && (
+                                <button
+                                    onClick={(evt) => {
+                                        evt.stopPropagation();
+                                        handleDeleteEventFromTab(activePerson.id, eIdx);
+                                    }}
+                                    className={`absolute -top-1 -right-1 bg-red-500 text-white rounded-full p-0.5 transition-opacity z-10 ${activeTab === e.tipo ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
+                                    title={`Elimina ${e.tipo}`}
+                                >
+                                    <X size={12} />
+                                </button>
+                            )}
+                        </div>
                     ))}
                     <button onClick={() => setShowAddEventModal(true)} className="px-3 py-2 rounded-full border-2 border-dashed border-gray-300 text-gray-400 hover:border-gray-500 transition">
                         <Plus size={16} />

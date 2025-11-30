@@ -12,7 +12,7 @@ body {
 }
 
 #root {
-    max-width: 1100px; /* A standard width */
+    max-width: 1300px; /* A standard width */
     margin: 0 auto; /* Center the box */
     box-shadow: 0 0 10px rgba(0,0,0,0.1); /* A subtle shadow for the box */
     height: 100vh;
@@ -24,7 +24,7 @@ body {
   height: 6px;
 }
 .custom-scroll::-webkit-scrollbar-track {
-  background: transparent;
+  background: #F8FAFC;
 }
 .custom-scroll::-webkit-scrollbar-thumb {
   background-color: #cbd5e1;
@@ -38,9 +38,4 @@ body {
 }
 .fade-in {
   animation: fadeIn 0.2s ease-out;
-}
-
-/* Dark mode override per scrollbar */
-.dark .custom-scroll::-webkit-scrollbar-thumb {
-  background-color: #4b5563;
 }
