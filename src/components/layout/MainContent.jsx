@@ -70,22 +70,19 @@ const MainContent = (props) => {
                         <div>
                             <div className="flex items-center gap-3">
                                 <h2 className="text-xl font-bold">{truncateText(activePerson.nome, 30)}</h2>
-                                <button onClick={openEditPersonModal} className="text-gray-400 hover:text-indigo-600 transition" title="Modifica">
+                                <button onClick={openEditPersonModal} className="p-1 rounded-full text-gray-400 hover:bg-gray-200 transition" title="Modifica">
                                     <Pencil size={20} />
                                 </button>
                                 <span className="text-xs px-2 py-1 rounded font-bold uppercase" style={themeStyles.accentBg}>
                                     {activePerson.relazione}
                                 </span>
                             </div>
-                            <div className="text-gray-500 mt-1 md:flex md:items-baseline md:gap-2">
-                                <div className="flex items-center gap-2">
-                                    <Calendar size={16} />
-                                    {headerInfo.date ? (headerInfo.isFixed ? formatFixedDate(headerInfo.date) : new Date(headerInfo.date).toLocaleDateString()) : "--"}
-                                </div>
-                                <div>
-                                    ({headerInfo.type})
-                                </div>
-                            </div>
+                            <p className="text-gray-500 flex items-center gap-2 mt-1">
+                                <Calendar size={16} />
+                                <span>
+                                    {headerInfo.date ? (headerInfo.isFixed ? formatFixedDate(headerInfo.date) : new Date(headerInfo.date).toLocaleDateString()) : "--"} ({headerInfo.type})
+                                </span>
+                            </p>
                             <div className="min-h-[2.5rem]">
                                 {headerInfo.partnerUid && (
                                     <button onClick={() => handleSelectUid(headerInfo.partnerUid, headerInfo.partnerType)} className="flex items-center gap-1 text-sm hover:underline font-medium" style={{ color: currentTheme.secondary }}>
@@ -100,11 +97,11 @@ const MainContent = (props) => {
                 <div className="flex flex-row gap-4 mb-6">
                     <div className="flex-grow sm:w-4/5 sm:flex-grow-0">
                         <div className="grid grid-cols-2 gap-4 h-full">
-                            <button onClick={openNewPersonModal} className="bg-white text-center p-4 rounded-xl shadow-sm border border-gray-200 hover:bg-gray-50 transition w-full h-full">
+                            <button onClick={openNewPersonModal} className="bg-white text-center p-4 rounded-xl shadow-sm border border-gray-300 hover:bg-gray-200 transition w-full h-full">
                                 <Users className="mx-auto mb-2 text-indigo-500" size={24} />
                                 <span className="font-bold text-sm text-gray-700">Nuova Persona</span>
                             </button>
-                            <button onClick={openNewGiftModal} className="bg-white text-center p-4 rounded-xl shadow-sm border border-gray-200 hover:bg-gray-50 transition w-full h-full">
+                            <button onClick={openNewGiftModal} className="bg-white text-center p-4 rounded-xl shadow-sm border border-gray-300 hover:bg-gray-200 transition w-full h-full">
                                 <Gift className="mx-auto mb-2 text-amber-500" size={24} />
                                 <span className="font-bold text-sm text-gray-700">Nuovo Regalo</span>
                             </button>
@@ -112,10 +109,10 @@ const MainContent = (props) => {
                     </div>
                     <div className="flex-shrink-0 sm:w-1/5">
                         <div className="flex flex-col gap-2 h-full">
-                            <button onClick={() => setShowModalStats(true)} className="bg-white border border-gray-300 px-4 py-2 rounded-lg font-bold shadow-sm flex items-center gap-2 justify-center">
+                            <button onClick={() => setShowModalStats(true)} className="bg-white border border-gray-300 px-4 rounded-lg font-bold shadow-sm flex items-center gap-2 justify-center hover:bg-gray-200 transition flex-1">
                                 <Calculator size={18} />
                             </button>
-                            <button onClick={handleArchive} className="bg-white border border-gray-200 text-gray-400 hover:text-red-600 px-3 py-2 rounded-lg shadow-sm hover:bg-red-50 transition flex justify-center">
+                            <button onClick={handleArchive} className="bg-white border border-gray-300 text-gray-400 hover:text-red-600 px-3 rounded-lg shadow-sm hover:bg-red-50 transition flex items-center justify-center flex-1">
                                 <Trash size={18} />
                             </button>
                         </div>
@@ -162,12 +159,12 @@ const MainContent = (props) => {
                 <AdUnit />
 
                 <div className="flex items-center gap-2 mb-4 pt-2 overflow-x-auto pb-2 no-scrollbar">
-                    <button onClick={() => handleTabChange("Tutti")} className={`px-4 py-2 rounded-full text-sm font-bold whitespace-nowrap transition ${activeTab === "Tutti" ? 'text-white' : 'bg-gray-100 text-gray-600'}`} style={activeTab === "Tutti" ? { backgroundColor: currentTheme.primary } : {}}>
+                    <button onClick={() => handleTabChange("Tutti")} className={`px-4 py-2 rounded-full text-sm font-bold whitespace-nowrap transition ${activeTab === "Tutti" ? 'text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`} style={activeTab === "Tutti" ? { backgroundColor: currentTheme.primary } : {}}>
                         Tutti
                     </button>
                     {activePerson.eventi.filter(e => !e.archived).map((e, eIdx) => (
                         <div key={e.tipo} className="relative group">
-                            <button onClick={() => handleTabChange(e.tipo)} className={`px-4 py-2 rounded-full text-sm font-bold whitespace-nowrap transition ${activeTab === e.tipo ? 'text-white' : 'bg-gray-100 text-gray-600'}`} style={activeTab === e.tipo ? { backgroundColor: currentTheme.primary } : {}}>
+                            <button onClick={() => handleTabChange(e.tipo)} className={`px-4 py-2 rounded-full text-sm font-bold whitespace-nowrap transition ${activeTab === e.tipo ? 'text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`} style={activeTab === e.tipo ? { backgroundColor: currentTheme.primary } : {}}>
                                 {e.tipo}
                             </button>
                             {!e.is_fixed && (
@@ -184,7 +181,7 @@ const MainContent = (props) => {
                             )}
                         </div>
                     ))}
-                    <button onClick={() => setShowAddEventModal(true)} className="px-3 py-2 rounded-full border-2 border-dashed border-gray-300 text-gray-400 hover:border-gray-500 transition">
+                    <button onClick={() => setShowAddEventModal(true)} className="px-3 py-2 rounded-full border-2 border-dashed border-gray-300 text-gray-400 hover:border-gray-500 hover:bg-gray-200 transition">
                         <Plus size={16} />
                     </button>
                 </div>
@@ -242,8 +239,8 @@ const MainContent = (props) => {
                                                 </span>
                                             )}
                                         </div>
-                                        <div className="mt-4 flex justify-end gap-2 sm:absolute sm:bottom-3 sm:right-3 sm:mt-0 sm:bg-white/90 sm:p-1 sm:rounded-lg sm:shadow-sm sm:opacity-0 sm:group-hover:opacity-100 transition">
-                                            <button onClick={() => openEditGiftModal(r, r._rIdx, r._eIdx, r._evtTipo)} className="p-1.5 bg-gray-100 rounded hover:opacity-80">
+                                        <div className="mt-4 flex justify-end gap-2 bg-white/90 p-1 rounded-lg shadow-sm sm:absolute sm:bottom-3 sm:right-3 sm:mt-0 sm:opacity-0 sm:group-hover:opacity-100 transition">
+                                            <button onClick={() => openEditGiftModal(r, r._rIdx, r._eIdx, r._evtTipo)} className="p-1.5 bg-gray-100 rounded hover:bg-gray-200 transition">
                                                 <Pencil size={16} />
                                             </button>
                                             <button onClick={() => handleDeleteSingleGift(r._rIdx, r._eIdx)} className="p-1.5 bg-gray-100 text-red-600 rounded hover:bg-red-100">
