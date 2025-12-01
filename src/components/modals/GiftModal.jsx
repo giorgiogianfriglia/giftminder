@@ -5,7 +5,9 @@ import { getCroppedImg, formatCurrency } from '../../utils/helpers';
 
 export const GiftModal = (props) => {
     const [imageToEdit, setImageToEdit] = useState(null);
-    const fileInputRef = useRef(null);
+    const fileInputRefCamera = useRef(null);
+    const fileInputRefGallery = useRef(null);
+    const [showPhotoChoice, setShowPhotoChoice] = useState(false);
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -18,8 +20,11 @@ export const GiftModal = (props) => {
 
     const handleDeletePhoto = () => {
         props.setGiftImg('');
-        if (fileInputRef.current) {
-            fileInputRef.current.value = null;
+        if (fileInputRefCamera.current) {
+            fileInputRefCamera.current.value = null;
+        }
+        if (fileInputRefGallery.current) {
+            fileInputRefGallery.current.value = null;
         }
     };
     const selectedEvent = props.activePerson?.eventi.find(e => e.tipo === props.giftTargetEvent);
@@ -38,6 +43,33 @@ export const GiftModal = (props) => {
     
     return (
         <>
+            {showPhotoChoice && (
+                <div className="fixed inset-0 bg-black/50 z-60 flex items-center justify-center p-4" onClick={() => setShowPhotoChoice(false)}>
+                    <div className="bg-white rounded-lg p-4 w-full max-w-xs" onClick={(e) => e.stopPropagation()}>
+                        <h3 className="font-bold mb-4 text-center">Scegli un'opzione</h3>
+                        <div className="flex flex-col gap-2">
+                            <button
+                                onClick={() => {
+                                    fileInputRefCamera.current.click();
+                                    setShowPhotoChoice(false);
+                                }}
+                                className="w-full bg-blue-500 text-white p-3 rounded-lg font-semibold"
+                            >
+                                Scatta una foto
+                            </button>
+                            <button
+                                onClick={() => {
+                                    fileInputRefGallery.current.click();
+                                    setShowPhotoChoice(false);
+                                }}
+                                className="w-full bg-gray-100 p-3 rounded-lg font-semibold"
+                            >
+                                Scegli dalla galleria
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
             {imageToEdit && (
                 <ImageEditor
                     imageSrc={imageToEdit}
@@ -130,7 +162,7 @@ export const GiftModal = (props) => {
                                 <label className="block text-sm font-bold mb-1">Immagine</label>
                                 <div
                                     className="w-24 h-24 bg-gray-100 rounded-lg flex-shrink-0 flex items-center justify-center overflow-hidden border border-gray-200 cursor-pointer"
-                                    onClick={() => fileInputRef.current?.click()}
+                                    onClick={() => setShowPhotoChoice(true)}
                                     title="Clicca per caricare un'immagine"
                                 >
                                     {props.giftImg ? (
@@ -142,7 +174,8 @@ export const GiftModal = (props) => {
                                 <div className='flex justify-center mt-2'>
                                     <button type="button" onClick={handleDeletePhoto} title="Rimuovi immagine" className="p-2 text-gray-500 hover:text-red-600"><Trash2 size={18} /></button>
                                 </div>
-                                <input type="file" ref={fileInputRef} onChange={handleFileChange} accept="image/*" capture="environment" className="hidden" />
+                                <input type="file" ref={fileInputRefCamera} onChange={handleFileChange} accept="image/*" capture="environment" className="hidden" />
+                                <input type="file" ref={fileInputRefGallery} onChange={handleFileChange} accept="image/*" className="hidden" />
                             </div>
                         </div>
                         <div>

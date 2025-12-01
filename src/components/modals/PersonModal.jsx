@@ -37,10 +37,11 @@ export const PersonModal = ({
     newEventDate,
     setNewEventDate
 }) => { 
-    const [uploadType, setUploadType] = React.useState('url');
     const [imageToEdit, setImageToEdit] = React.useState(null);
-    const fileInputRef = React.useRef(null);
+    const fileInputRefCamera = React.useRef(null);
+    const fileInputRefGallery = React.useRef(null);
     const [isNewEventFixed, setIsNewEventFixed] = React.useState(false);
+    const [showPhotoChoice, setShowPhotoChoice] = React.useState(false);
 
     React.useEffect(() => {
         const fixed = fixedEvents.find(fe => fe.type === newEventType);
@@ -55,7 +56,8 @@ export const PersonModal = ({
         }
     }, [newEventType, setNewEventDate, editingPersonId]);
 
-        const handleFileChange = (e) => {         const file = e.target.files[0];
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => setImageToEdit(reader.result);
@@ -63,14 +65,45 @@ export const PersonModal = ({
         }
     };
 
-        const handleDeletePhoto = () => {        setNewPersonPhoto('');
-        if (fileInputRef.current) {
-            fileInputRef.current.value = null;
+    const handleDeletePhoto = () => {
+        setNewPersonPhoto('');
+        if (fileInputRefCamera.current) {
+            fileInputRefCamera.current.value = null;
+        }
+        if (fileInputRefGallery.current) {
+            fileInputRefGallery.current.value = null;
         }
     };
 
     return ( 
         <>
+            {showPhotoChoice && (
+                <div className="fixed inset-0 bg-black/50 z-60 flex items-center justify-center p-4" onClick={() => setShowPhotoChoice(false)}>
+                    <div className="bg-white rounded-lg p-4 w-full max-w-xs" onClick={(e) => e.stopPropagation()}>
+                        <h3 className="font-bold mb-4 text-center">Scegli un'opzione</h3>
+                        <div className="flex flex-col gap-2">
+                            <button
+                                onClick={() => {
+                                    fileInputRefCamera.current.click();
+                                    setShowPhotoChoice(false);
+                                }}
+                                className="w-full bg-blue-500 text-white p-3 rounded-lg font-semibold"
+                            >
+                                Scatta una foto
+                            </button>
+                            <button
+                                onClick={() => {
+                                    fileInputRefGallery.current.click();
+                                    setShowPhotoChoice(false);
+                                }}
+                                className="w-full bg-gray-100 p-3 rounded-lg font-semibold"
+                            >
+                                Scegli dalla galleria
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
             {imageToEdit && (
                 <ImageEditor 
                     imageSrc={imageToEdit}
@@ -102,8 +135,8 @@ export const PersonModal = ({
                                 <div className="flex items-center gap-4">
                                     <div 
                                         className="w-24 h-24 rounded-full bg-gray-100 flex-shrink-0 flex items-center justify-center overflow-hidden border cursor-pointer"
-                                        onClick={() => fileInputRef.current?.click()}
-                                        title="Clicca per caricare un\'immagine"
+                                        onClick={() => setShowPhotoChoice(true)}
+                                        title="Clicca per caricare un'immagine"
                                     >
                                         {newPersonPhoto ? (
                                             <img src={newPersonPhoto} alt="Avatar" className="w-full h-full object-cover" />
@@ -116,7 +149,8 @@ export const PersonModal = ({
                                         <div className="flex gap-2 items-center">
                                             <button type="button" onClick={handleDeletePhoto} title="Rimuovi immagine" className="p-2 text-gray-500 hover:text-red-600"><Trash2 size={18} /></button>
                                         </div>
-                                        <input type="file" ref={fileInputRef} onChange={handleFileChange} accept="image/png, image/jpeg, image/webp" className="hidden" />
+                                        <input type="file" ref={fileInputRefCamera} onChange={handleFileChange} accept="image/*" capture="environment" className="hidden" />
+                                        <input type="file" ref={fileInputRefGallery} onChange={handleFileChange} accept="image/*" className="hidden" />
                                     </div>
                                 </div>
                             </div>
