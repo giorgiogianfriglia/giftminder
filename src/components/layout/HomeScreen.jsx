@@ -15,8 +15,10 @@ const HomeScreen = ({
     setShowPeopleList
 }) => {
     const soonestDay = sidebarList.length > 0 ? Math.min(...sidebarList.map(p => p.nextEvent.days)) : null;
-    const soonestPeople = sidebarList.filter(p => p.nextEvent.days === soonestDay);
+    const soonestPeopleRaw = sidebarList.filter(p => p.nextEvent.days === soonestDay);
+    const soonestPeople = soonestPeopleRaw.slice(0, 5);
     const displayCount = soonestPeople.length;
+    const totalSoonestCount = soonestPeopleRaw.length;
 
     const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -27,7 +29,7 @@ const HomeScreen = ({
             }, 2000);
             return () => clearInterval(timer);
         }
-    }, [soonestPeople, sidebarList]);
+    }, [soonestPeople]);
 
     if (sidebarList.length === 0) {
         return (
@@ -50,7 +52,11 @@ const HomeScreen = ({
         lastGift: getLastGift(soonestPeople[currentSlide].id, soonestPeople[currentSlide].nextEvent.tipo),
     } : null;
     
-    const upcomingEvents = sidebarList.filter(p => p.nextEvent.days !== soonestDay).slice(0, 3);
+    const remainingSoonest = soonestPeopleRaw.slice(5);
+    const otherUpcoming = sidebarList.filter(p => p.nextEvent.days !== soonestDay);
+    const upcomingEvents = [...remainingSoonest, ...otherUpcoming].slice(0, 3);
+    const visibleInUpcomingFromSoonest = upcomingEvents.filter(p => p.nextEvent.days === soonestDay).length;
+    const hiddenSoonestCount = totalSoonestCount - soonestPeople.length - visibleInUpcomingFromSoonest;
 
     return (
         <div className="p-6 bg-slate-50 h-full overflow-y-auto flex-1 custom-scroll">
@@ -78,7 +84,7 @@ const HomeScreen = ({
                         {soonestPeople.length > 0 && (
                             <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 h-[230px]">
                                 <h2 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">
-                                    In Scadenza {displayCount > 1 && `(${displayCount})`}
+                                    In Scadenza {totalSoonestCount > 1 && `(${totalSoonestCount})`}
                                 </h2>
                                 <div className="flex items-start sm:items-start gap-6">
                                     <div className="flex flex-col items-center flex-shrink-0 w-24">
@@ -183,6 +189,11 @@ const HomeScreen = ({
                                     </div>
                                 ))}
                             </div>
+                            {hiddenSoonestCount > 0 && (
+                                <div className="mt-4 text-center text-sm text-gray-500 font-bold">
+                                    + {hiddenSoonestCount} {hiddenSoonestCount > 1 ? 'altre persone' : 'altra persona'}
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
